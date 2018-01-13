@@ -1,2 +1,2 @@
 # Robocon_arduino
-arduino testing
+qtr sensor (reflecatance sensor) arduino testing
