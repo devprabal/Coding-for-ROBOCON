@@ -1,0 +1,5 @@
+1. http://www.instructables.com/id/High-performance-Line-follower-Robot/
+2. http://diwo.bq.com/en/black-or-white-the-infrared-sensor/
+3. https://www.quora.com/Which-sensor-should-I-use-in-a-line-follower-bot-LDR-or-IR
+4. https://robotics.stackexchange.com/questions/8665/color-sensor-alternatives/8668
+5. 

@@ -1,0 +1,170 @@
+/*------ Arduino Line Follower Code----- */
+/*-------definning Inputs------*/
+#define LS 2      // left sensor
+#define RS 3      // right sensor
+#define led 7
+/*-------definning Outputs------*/
+#define LM1 A0       // left motor
+#define LM2 A1       // left motor
+#define RM1 A2      // right motor
+#define RM2 A3      // right motor
+int counter=0;
+void setup()
+{
+  pinMode(LS, INPUT);
+  pinMode(RS, INPUT);
+  pinMode(LM1, OUTPUT);
+  pinMode(LM2, OUTPUT);
+  pinMode(RM1, OUTPUT);
+  pinMode(RM2, OUTPUT);
+  pinMode(led, OUTPUT);
+  Serial.begin(9600);
+}
+void forward()
+{
+    digitalWrite(LM1, 255);
+    digitalWrite(LM2, 0);
+    digitalWrite(RM1, 255);
+    digitalWrite(RM2, 0);
+}
+void left()
+{
+    analogWrite(LM1, 255);
+    analogWrite(LM2, 0);
+    analogWrite(RM1, 0);
+    analogWrite(RM2, 0);
+    delay(250);
+}
+void right()
+{
+    analogWrite(LM1, 0);
+    analogWrite(LM2, 0);
+    analogWrite(RM1, 255);
+    analogWrite(RM2, 0);
+    delay(250);
+}
+void stopp()
+{
+    digitalWrite(LM1, 0);
+    digitalWrite(LM2, 0);
+    digitalWrite(RM1, 0);
+    digitalWrite(RM2, 0);
+    delay(250);
+}
+void loop()
+{
+  Serial.print(digitalRead(LS));
+  Serial.print("    ");
+  Serial.print(digitalRead(RS));
+  Serial.print("\n");
+  
+  if(digitalRead(LS) && digitalRead(RS))     // Move Forward
+  {
+    forward();
+  }
+  
+  if(!(digitalRead(LS)) && digitalRead(RS))     // Turn right
+  {
+    right();
+  }
+  
+  if(digitalRead(LS) && !(digitalRead(RS)))     // turn left
+  {
+    left();
+  }
+  
+  //forward();
+  if(!(digitalRead(LS)) && !(digitalRead(RS)))     // cross
+  {    
+    counter++;
+    if(counter==1)
+    {
+      left();
+      forward();
+    }
+    if(counter==2)
+    {
+      for (int fadeValue = 255 ; fadeValue >= 0; fadeValue -= 5)
+      {
+        analogWrite(LM1, fadeValue);
+        analogWrite(LM2, 0);
+        analogWrite(RM1, fadeValue);
+        analogWrite(RM2, 0);
+      }
+    }
+    if(counter==3)
+    {
+        analogWrite(LM1, 0);
+        analogWrite(LM2, 0);
+        analogWrite(RM1, 0);
+        analogWrite(RM2, 0);
+        digitalWrite(led, HIGH);
+        delay(2000);
+        digitalWrite(led, LOW);
+        analogWrite(LM1, 0);
+        analogWrite(LM2, 0);
+        analogWrite(RM1, 255);
+        analogWrite(RM2, 255);
+        delay(500);
+        forward();
+    }
+    if(counter==5)
+    {
+      stopp();
+      left();
+      forward();
+    }
+    if(counter==6)
+    {
+      left();
+      forward();
+    }
+    if(counter==7)
+    {
+      for (int fadeValue = 255 ; fadeValue >= 0; fadeValue -= 5)
+      {
+        analogWrite(LM1, fadeValue);
+        analogWrite(LM2, 0);
+        analogWrite(RM1, fadeValue);
+        analogWrite(RM2, 0);
+      }
+    }
+    if(counter==8)
+    {
+        analogWrite(LM1, 0);
+        analogWrite(LM2, 0);
+        analogWrite(RM1, 0);
+        analogWrite(RM2, 0);
+        digitalWrite(led, HIGH);
+        delay(2000);
+        digitalWrite(led, LOW);
+        analogWrite(LM1, 0);
+        analogWrite(LM2, 255);
+        analogWrite(RM1, 0);
+        analogWrite(RM2, 255);
+    }
+    if(counter==10)
+    {
+      stopp();
+      forward();
+    }
+    if(counter==14)
+    {
+      for (int fadeValue = 255 ; fadeValue >= 0; fadeValue -= 5)
+      {
+        analogWrite(LM1, fadeValue);
+        analogWrite(LM2, 0);
+        analogWrite(RM1, fadeValue);
+        analogWrite(RM2, 0);
+      }
+    }
+    if(counter==15)
+    {
+      stopp();
+      digitalWrite(led, HIGH);
+      delay(2000);
+      digitalWrite(led, LOW);
+      
+    }
+  }
+}
