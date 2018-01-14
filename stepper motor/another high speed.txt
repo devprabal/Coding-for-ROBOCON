@@ -1,0 +1,29 @@
+Arduino (SainSmart) Uno R3 and StepStick A4982 stepper driver. Nema17 stepper was driven with 1/4 microstepping and max frequency of 35,714 kHz. This results to spindle speed of about 2680 rpm. Arduino code:
+
+const int ledPin = 13;
+long interval = 250;
+long interval2 = 40;
+long previousMillis = 0;
+long askel = 1;
+
+void setup(){
+pinMode (ledPin, OUTPUT);
+}
+
+void loop(){
+  
+  unsigned long currentMillis = millis();
+  
+  digitalWrite(ledPin, HIGH);
+  delayMicroseconds(interval);
+  digitalWrite(ledPin, LOW);
+  delayMicroseconds(interval);
+
+if(currentMillis - previousMillis > interval2) {
+  previousMillis = currentMillis;
+if (interval > 1) {  
+  interval = interval - askel;
+}
+}
+
+}
