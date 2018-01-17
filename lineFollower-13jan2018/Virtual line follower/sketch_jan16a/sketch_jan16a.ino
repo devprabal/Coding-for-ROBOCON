@@ -1,34 +1,34 @@
-String tz2color = "white";
-String tz1color = "black";
-String tz3color = "gold";
+char tz2color = 'w';
+char tz1color = 'b';
+char tz3color = 'g';
 bool cross=false;
 void back()
 {
-  Serial.print("Back");
+  Serial.println("Back");
 }
 void left()
 {
-  Serial.print("left");
+  Serial.println("left");
 }
 void right()
 {
-  Serial.print("right");
+  Serial.println("right");
 }
 bool isAligned()
 {
   Serial.println("press 1 for aligned and 0 for not aligned");
   bool al = Serial.read();
-  if(a1){
+  if(al){
     Serial.println("bot aligned");
   }
   else{
     Serial.println("Bot not aligned");
   }
-  return a1;
+  return al;
 }
 bool takeShuttle()
 {
-  Serial.println("Shuttle 1 for Shuttle available")
+  Serial.println("Press 1 for Shuttle available");
   bool st = Serial.read();
   if(st){
     Serial.println("shuttle availble");
@@ -38,13 +38,21 @@ bool takeShuttle()
     }
   return st;
 }
-String detectColor()
+char detectColor()
 {
     Serial.println("Detect color....\nENter color...\n'w'-white\n'b'-black\n'g'-gold");
     char c = Serial.read();
     if (c=='w'){
       Serial.println("White detected");
-      return "white";
+      return 'w';
+    }
+    if (c=='b'){
+      Serial.println("black detected");
+      return 'b';
+    }
+    if (c=='g'){
+      Serial.println("gold detected");
+      return 'g';
     }
     
 }
@@ -54,7 +62,8 @@ void stopp()
 }
 int throww()
 {
-  
+  Serial.println("press 1 for positive feedback or else 0");
+  return Serial.read();
 }
 void tz1()
 {
@@ -65,6 +74,8 @@ void tz1()
   while(1){
   right();
   prev = curr;
+  Serial.println("Press 0 for no cross, 1 for cross");
+  cross = Serial.read();
   curr = cross;
   if (curr==true && prev == false){
     cross_no++;
@@ -105,6 +116,7 @@ int  cross_no=0;
   if (cross_no == 2){
     stopp();
     int feedback = throww();
+   
     break;
   }
   }
@@ -117,7 +129,7 @@ int  cross_no=0;
   }
   if (cross_no == 0){
     stopp();
-    return;
+    break;
   }
   } 
 }
@@ -166,20 +178,21 @@ void loop()
   // put your main code here, to run repeatedly:
   bool cross = 0;
   //if(Serial.available()>0)
-  {
-    cross = Serial.read();
-  }
+  Serial.print("\nPress 0 for not cross, 1 for cross");
+  cross = Serial.read();
+  
 while(!cross)
 {
   back();
+  cross = Serial.read();
 }
-
+stopp();
 if(isAligned())
 {
   bool shuttle_status = takeShuttle();
-  String shuttle_color = detectColor();
+  char shuttle_color = detectColor();
   if (shuttle_status){
-  while(shuttle_color == tz1color)
+  if(shuttle_color == tz1color)
   {
   tz1();
   }
@@ -188,17 +201,17 @@ if(isAligned())
     while(!cross)
     {
       back();
+      cross = Serial.read();
     }
   }
-  while(shuttle_color == tz1color)
+  if(shuttle_color == tz1color)
   {
     tz2();
   }
-  while(shuttle_color == tz3color)
+  if(shuttle_color == tz3color)
   {
     tz3();
   }
 }
 }
 }
- 
