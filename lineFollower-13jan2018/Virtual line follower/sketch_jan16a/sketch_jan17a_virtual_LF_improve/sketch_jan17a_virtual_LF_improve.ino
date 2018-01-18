@@ -1,5 +1,5 @@
-  char tz2color = 'w';
   char tz1color = 'b';
+  char tz2color = 'w';
   char tz3color = 'g';
   bool cross=false;
   void back()
@@ -17,51 +17,65 @@
   int isAligned()
   {
     int al=0;
-    Serial.flush();
-    while(Serial.available()>0)
+    while(1)
     {
-      Serial.println("press 1 for aligned and 0 for not aligned");
+      Serial.println("Press 1 for allign, else 0 ");
+      while(Serial.available()<=0);
       al=Serial.read();
-      if(al==1){
-      Serial.println("bot aligned");
-      break;
-      }
-      else{
-        Serial.println("Bot not aligned");
-      }
-      delay(1000);
+        if(al==1){
+        Serial.println("bot aligned");
+        break;
+        }
+        else{
+          Serial.println("Bot not aligned");
+        }
     }
     return al;
   }
   bool takeShuttle()
   {
-    Serial.println("Press 1 for Shuttle available");
-    bool st = Serial.read();
-    if(st){
+    bool st =0;
+    while(1)
+    {
+      Serial.println("Press 1 for Shuttle available");
+      while(Serial.available()<=0);
+      st = Serial.read();
+      if(st){
       Serial.println("shuttle availble");
+      break;
       }
       else{
         Serial.println("stuttle not find");
       }
+    }
+    
     return st;
   }
   char detectColor()
   {
-      Serial.println("Detect color....\nENter color...\n'w'-white\n'b'-black\n'g'-gold");
-      char c = Serial.read();
-      if (c=='w'){
+      char c;
+      while(1)
+      {
+        Serial.println("Detect color....\nENter color...\n'w'-white\n'b'-black\n'g'-gold");
+        while(Serial.available()<=0);
+        c = Serial.read();
+        if (c=='w'){
         Serial.println("White detected");
         return 'w';
-      }
-      if (c=='b'){
+        }
+        else if (c=='b'){
         Serial.println("black detected");
         return 'b';
       }
-      if (c=='g'){
+      else if (c=='g'){
         Serial.println("gold detected");
         return 'g';
       }
-      
+      else
+      {
+        Serial.println("invalid color detected");
+      }
+     }  
   }
   void stopp()
   {
@@ -69,108 +83,152 @@
   }
   int throww()
   {
-    Serial.println("press 1 for positive feedback or else 0");
-    return Serial.read();
-  }
-  void tz1()
-  {
-   int cross_no=0;
-  
-    bool prev=false;bool curr=false;
-  
-    while(1){
-    right();
-    prev = curr;
-    Serial.println("Press 0 for no cross, 1 for cross");
-    cross = Serial.read();
-    curr = cross;
-    if (curr==true && prev == false){
-      cross_no++;
+    int th = 0;
+    while(1)
+    {
+      Serial.println("press 1 for positive feedback or else 0");
+      while(Serial.available()<=0);
+      th = Serial.read();
+      if(th)
+      {
+       break;
+      }
     }
-    if (cross_no == 2){
+    return th;
+  }
+  void tz1() // throws at cross_no 2
+  {
+    int cross_no = 0; // to count no. of crosses
+    int cross = 0; // to detect a cross
+    
+  
+    while(1)
+    {
+      int prev = 0;
+      int curr = 0;
+      right();
+      prev = curr;
+      Serial.println("Press 0 for no cross, 1 for a cross");
+      while(Serial.available()<=0);
+      cross = Serial.read();
+      curr = cross;
+      if (curr != prev)
+      {
+        cross_no++;
+      }
+      if (cross_no == 2)
+      {
       stopp();
       int feedback = throww();
       break;
-    }
+      }
     }
   //for going back 
-    while(1){
-      curr = false;
-      prev = false;
-     if (curr==true && prev == false){
-      cross_no--;
-    }
-    if (cross_no == 0){
+    while(1)
+    {
+      int prev = 0;
+      int curr = 0;
+      left();
+      prev = curr;
+      Serial.println("Press 0 for no cross, 1 for a cross");
+      while(Serial.available()<=0);
+      cross = Serial.read();
+      curr = cross;
+      if (curr != prev)
+      {
+        cross_no--;
+      }
+      if (cross_no == 0)
+      {
       stopp();
-      return;
-    }
+      break;
+      }
     } 
   }
   
   void tz2()
   {
-  int  cross_no=0;
-  
-    bool prev=false; bool curr=false;
-  
-    while(1){
-    right();
-    prev = curr;
-    curr = cross;
-    if (curr==true && prev == false){
-      cross_no++;
-    }
-    if (cross_no == 2){
-      stopp();
-      int feedback = throww();
-     
-      break;
-    }
-    }
-  //for going back 
-    while(1){
-      curr = false;
-      prev = false;
-     if (curr==true && prev == false){
-      cross_no--;
-    }
-    if (cross_no == 0){
-      stopp();
-      break;
-    }
-    } 
+//  int  cross_no=0;
+//  
+//    bool prev=false; bool curr=false;
+//  
+//    while(1){
+//    right();
+//    prev = curr;
+//    curr = cross;
+//    if (curr==true && prev == false){
+//      cross_no++;
+//    }
+//    if (cross_no == 2){
+//      stopp();
+//      int feedback = throww();
+//     
+//      break;
+//    }
+//    }
+//  //for going back 
+//    while(1){
+//      curr = false;
+//      prev = false;
+//     if (curr==true && prev == false){
+//      cross_no--;
+//    }
+//    if (cross_no == 0){
+//      stopp();
+//      break;
+//    }
+//    }
+    tz1(); 
   }
   
-  void tz3()
+  void tz3() // throws at cross_no 5
   {
-   int cross_no=0;
-    bool prev=false; bool curr=false;
+    int cross_no = 0; // to count no. of crosses
+    int cross = 0; // to detect a cross
+    
   
-    while(1){
-    right();
-    prev = curr;
-    curr = cross;
-    if (curr==true && prev == false){
-      cross_no++;
-    }
-    if (cross_no == 5){
+    while(1)
+    {
+      int prev = 0;
+      int curr = 0;
+      right();
+      prev = curr;
+      Serial.println("Press 0 for no cross, 1 for a cross");
+      while(Serial.available()<=0);
+      cross = Serial.read();
+      curr = cross;
+      if (curr != prev)
+      {
+        cross_no++;
+      }
+      if (cross_no == 5)
+      {
       stopp();
       int feedback = throww();
       break;
-    }
+      }
     }
   //for going back 
-    while(1){
-      curr = false;
-      prev = false;
-     if (curr==true && prev == false){
-      cross_no--;
-    }
-    if (cross_no == 0){
+    while(1)
+    {
+      int prev = 0;
+      int curr = 0;
+      left();
+      prev = curr;
+      Serial.println("Press 0 for no cross, 1 for a cross");
+      while(Serial.available()<=0);
+      cross = Serial.read();
+      curr = cross;
+      if (curr != prev)
+      {
+        cross_no--;
+      }
+      if (cross_no == 0)
+      {
       stopp();
-      return;
+      break;
+      }
     }
-    } 
   }
   
   
@@ -183,44 +241,60 @@
   void loop() 
   {
     // put your main code here, to run repeatedly:
-    char cross = '0';
+    int cross = 0;
     Serial.flush();
-    while(!Serial.available())
+    while(1)
     {
-    back();
     Serial.println("\nPress 0 for not cross, 1 for cross  ");
-    strcpy(cross,Serial.read());
-    //Serial.println(cross);
-    delay(1000);
-    }
+    while(Serial.available()<=0);
+    cross = Serial.read();
     
+    if(cross == 0)
+     {
+      back();
+     }
+     else
+     {
+        break;
+     }
+    }
   stopp();
   delay(1000);
+  
   if(isAligned()=='1')
   {
     bool shuttle_status = takeShuttle();
     char shuttle_color = detectColor();
     if (shuttle_status){
-    if(shuttle_color == tz1color)
-    {
-    tz1();
-    }
-    if(shuttle_color == tz2color)
-    {
-      while(!cross)
+      if(shuttle_color == tz1color)
       {
-        back();
-        cross = Serial.read();
+        tz1();
+      }
+      else if(shuttle_color == tz2color)
+      {
+        while(1)
+        {
+          Serial.println("Move back till a cross is detected. Press 1 for cross else 0");
+          while(Serial.available()<=0);
+          cross = Serial.read();
+          if(cross == 0)
+          {
+            back();
+          }
+          else
+          {
+            break;
+          }
+        }
+      }
+      if(shuttle_color == tz2color)
+      {
+        tz2();
+      }
+      if(shuttle_color == tz3color)
+      {
+        tz3();
       }
     }
-    if(shuttle_color == tz1color)
-    {
-      tz2();
-    }
-    if(shuttle_color == tz3color)
-    {
-      tz3();
-    }
-  }
-  }
+   }
   }
