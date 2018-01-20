@@ -110,32 +110,36 @@
     }
     return th;
   }
-  void tz1() // throws at cross_no 2
+ void tz1() // throws at cross_no 2
   {
     char cross_no = '0'; // to count no. of crosses
     char cross = '0'; // to detect a cross
     
-  
+  char prev = '0';
+      char curr = '0';
+     
     while(1)
     {
-      char prev = '0';
-      char curr = '0';
-      right();
-      prev = curr;
+      
+      bool newc= curr == '1' && prev =='0';
+       bool newcomc= curr == '0' && prev =='1';
       Serial.println("Press 0 for no cross, 1 for a cross");
       while(Serial.available()<=0);
       cross = Serial.read();
+      prev = curr;
       curr = cross;
-      if (curr == prev)
-      {
-        right();
-      }
-      if (curr != prev)
+      if (newc)
       {
         int(cross_no++);
+        Serial.println(cross_no);
         right();
       }
-      if (cross_no == '2')
+      if (curr == prev || newcomc )
+      {
+        
+        right();
+      }
+      if (cross_no == '3')
       {
       stopp();
       char feedback = throww();
@@ -145,15 +149,14 @@
   //for going back 
     while(1)
     {
-      char prev = '0';
-      char curr = '0';
+    
       left();
       prev = curr;
       Serial.println("Press 0 for no cross, 1 for a cross");
       while(Serial.available()<=0);
       cross = Serial.read();
       curr = cross;
-      if (curr != prev)
+       if (curr == '1' && prev =='0')
       {
         int(cross_no--);
       }
@@ -163,7 +166,6 @@
       break;
       }
     }
-    mBotAvailable();
     
   }
   
