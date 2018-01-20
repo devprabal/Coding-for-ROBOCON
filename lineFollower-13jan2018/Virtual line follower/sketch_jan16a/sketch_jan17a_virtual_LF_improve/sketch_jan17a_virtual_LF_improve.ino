@@ -33,6 +33,22 @@
     }
     return (int)al;
   }
+  void mBotAvailable()
+  {
+    char mStatus;
+    while(1)
+    {
+      Serial.println("Press 1 if manualBot is Available before TZ1 else 0");
+      while(Serial.available()<=0);
+      mStatus = Serial.read();
+      if (mStatus == '1')
+      {
+        Serial.println("Manual bot detected.");
+        break;
+      }
+    }
+    
+  }
   char takeShuttle()
   {
     char st ='0';
@@ -46,7 +62,7 @@
       break;
       }
       else{
-        Serial.println("stuttle not find");
+        Serial.println("stuttle not found");
       }
     }
     
@@ -57,7 +73,7 @@
       char c;
      // while(1)
       {
-        Serial.println("Detect color....\nENter color...\n'w'-white\n'b'-black\n'g'-gold");
+        Serial.println("Detect color....\nENter color...\n'b'-black'\nw'-white\n'g'-gold");
         while(Serial.available()<=0);
         c = Serial.read();
         if (c=='w'){
@@ -84,7 +100,7 @@
     char th = '0';
     while(1)
     {
-      Serial.println("press 1 for positive feedback or else 0");
+      Serial.println("press 1 for throw success or else 0");
       while(Serial.available()<=0);
       th = Serial.read();
       if(th == '1')
@@ -147,6 +163,7 @@
       break;
       }
     }
+    mBotAvailable();
     
   }
   
