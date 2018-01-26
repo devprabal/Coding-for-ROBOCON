@@ -71,7 +71,7 @@ void allStop() {
 void forwardMovement() {
 
   // Set direction bits
-  digitalWrite(dirFR, HIGH); digitalWrite(dirFL, LOW); digitalWrite(dirRR, HIGH); digitalWrite(dirRL, LOW);
+  digitalWrite(dirFR, HIGH); digitalWrite(dirFL, HIGH); digitalWrite(dirRR, HIGH); digitalWrite(dirRL, HIGH);
 
   // Ramp up and command motor controllers
   for (int i = 0; i < 255; i++)
@@ -103,7 +103,7 @@ void forwardMovement() {
 void backwardMovement() {
 
   // Set direction bits
-  digitalWrite(dirFR, LOW); digitalWrite(dirFL, HIGH); digitalWrite(dirRR, LOW); digitalWrite(dirRL, HIGH);
+  digitalWrite(dirFR, LOW); digitalWrite(dirFL, LOW); digitalWrite(dirRR, LOW); digitalWrite(dirRL, LOW);
 
   // Ramp up and command motor controllers
   for (int i = 0; i < 255; i++)
