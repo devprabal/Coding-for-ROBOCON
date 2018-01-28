@@ -31,27 +31,27 @@ IN_1 = 5
 IN_2 = 4
 IN_3 = 6
 IN_4 = 7
-def ease_in(speedValue):
-    for i in range(0,speedValue,2):
-        a.analogWrite(pwmPinFR, i)
-        a.analogWrite(pwmPinFL, i)
-        a.analogWrite(pwmPinRL, i)
-        a.analogWrite(pwmPinRR, i)
-    
+#def ease_in(speedValue):
+#    for i in range(0,speedValue,2):
+#        a.analogWrite(pwmPinFR, i)
+#        a.analogWrite(pwmPinFL, i)
+#        a.analogWrite(pwmPinRL, i)
+#        a.analogWrite(pwmPinRR, i)
+#    
 
-def setDirection(FR, FL, RL, RR, speedValue):
-  a.digitalWrite(dirPinFR, FR)
-  a.digitalWrite(dirPinFL, FL)
-  a.digitalWrite(dirPinRL, RL)
-  a.digitalWrite(dirPinRR, RR)
-  #ease_in(speedValue)
+#def setDirection(FR, FL, RL, RR, speedValue):
+#  a.digitalWrite(dirPinFR, FR)
+#  a.digitalWrite(dirPinFL, FL)
+#  a.digitalWrite(dirPinRL, RL)
+#  a.digitalWrite(dirPinRR, RR)
+#  #ease_in(speedValue)
   
 
-def Movement( speedValue):
-    a.analogWrite(pwmPinFR, speedValue)
-    a.analogWrite(pwmPinFL, speedValue)
-    a.analogWrite(pwmPinRR, speedValue)
-    a.analogWrite(pwmPinRL, speedValue)
+#def Movement( speedValue):
+#    a.analogWrite(pwmPinFR, speedValue)
+#    a.analogWrite(pwmPinFL, speedValue)
+#    a.analogWrite(pwmPinRR, speedValue)
+#    a.analogWrite(pwmPinRL, speedValue)
 
 def stop():
     i =0
@@ -95,45 +95,69 @@ while True:
                 print('R2')
             if j.get_button(cross):
                 print('cross')
-                setDirection(0,0,0,0,150)
+                a.digitalWrite(dirPinFR, 0)
+                a.digitalWrite(dirPinFL, 0)
+                a.digitalWrite(dirPinRL, 0)
+                a.digitalWrite(dirPinRR, 0)
                 for i in range(0,150,2):
                     a.analogWrite(pwmPinFR, i)
                     a.analogWrite(pwmPinFL, i)
                     a.analogWrite(pwmPinRL, i)
                     a.analogWrite(pwmPinRR, i)
-                Movement(150)
+                a.analogWrite(pwmPinFR, 150)
+                a.analogWrite(pwmPinFL, 150)
+                a.analogWrite(pwmPinRR, 150)
+                a.analogWrite(pwmPinRL, 150)
       
             if j.get_button(square):
                 print('square')
-                setDirection(1,0,1,0,150)
+                a.digitalWrite(dirPinFR, 1)
+                a.digitalWrite(dirPinFL, 0)
+                a.digitalWrite(dirPinRL, 1)
+                a.digitalWrite(dirPinRR, 0)
                 for i in range(0,150,2):
                     a.analogWrite(pwmPinFR, i)
                     a.analogWrite(pwmPinFL, i)
                     a.analogWrite(pwmPinRL, i)
                     a.analogWrite(pwmPinRR, i)
-                Movement(150)
+                a.analogWrite(pwmPinFR, 150)
+                a.analogWrite(pwmPinFL, 150)
+                a.analogWrite(pwmPinRR, 150)
+                a.analogWrite(pwmPinRL, 150)
               
             if j.get_button(triangle):
                 print('triangle')
-                setDirection(1,1,1,1,150)
+                a.digitalWrite(dirPinFR, 1)
+                a.digitalWrite(dirPinFL, 1)
+                a.digitalWrite(dirPinRL, 1)
+                a.digitalWrite(dirPinRR, 1)
                 for i in range(0,150,2):
                     a.analogWrite(pwmPinFR, i)
                     a.analogWrite(pwmPinFL, i)
                     a.analogWrite(pwmPinRL, i)
                     a.analogWrite(pwmPinRR, i)
-                Movement(150)
+                a.analogWrite(pwmPinFR, 150)
+                a.analogWrite(pwmPinFL, 150)
+                a.analogWrite(pwmPinRR, 150)
+                a.analogWrite(pwmPinRL, 150)
 
                  
 
             if j.get_button(circle):
               print('circle')
-              setDirection(0,1,0,1,150)
+              a.digitalWrite(dirPinFR, 0)
+              a.digitalWrite(dirPinFL, 1)
+              a.digitalWrite(dirPinRL, 0)
+              a.digitalWrite(dirPinRR, 1)
               for i in range(0,150,2):
-                    a.analogWrite(pwmPinFR, i)
-                    a.analogWrite(pwmPinFL, i)
-                    a.analogWrite(pwmPinRL, i)
-                    a.analogWrite(pwmPinRR, i)
-              Movement(150)
+                a.analogWrite(pwmPinFR, i)
+                a.analogWrite(pwmPinFL, i)
+                a.analogWrite(pwmPinRL, i)
+                a.analogWrite(pwmPinRR, i)
+              a.analogWrite(pwmPinFR, 150)
+              a.analogWrite(pwmPinFL, 150)
+              a.analogWrite(pwmPinRR, 150)
+              a.analogWrite(pwmPinRL, 150)
           
            
         if event.type == pygame.JOYBUTTONUP:
