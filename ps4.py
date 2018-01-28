@@ -1,5 +1,4 @@
 from nanpy import (ArduinoApi, SerialManager)
-from time import sleep
 import pygame
 pygame.init()
 j = pygame.joystick.Joystick(0)
@@ -117,7 +116,7 @@ while True:
               Movement(150)
           
            
-        elif event.type == pygame.JOYBUTTONUP:
+        if event.type == pygame.JOYBUTTONUP:
             a.digitalWrite(IN_1, a.LOW)
             a.digitalWrite(IN_2, a.LOW)
             a.digitalWrite(IN_3, a.LOW)
