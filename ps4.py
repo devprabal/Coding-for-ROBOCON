@@ -44,7 +44,7 @@ def setDirection(FR, FL, RL, RR, speedValue):
   a.digitalWrite(dirPinFL, FL)
   a.digitalWrite(dirPinRL, RL)
   a.digitalWrite(dirPinRR, RR)
-  ease_in(speedValue)
+  #ease_in(speedValue)
   
 
 def Movement( speedValue):
@@ -96,16 +96,31 @@ while True:
             if j.get_button(cross):
                 print('cross')
                 setDirection(0,0,0,0,150)
+                for i in range(0,150,2):
+                    a.analogWrite(pwmPinFR, i)
+                    a.analogWrite(pwmPinFL, i)
+                    a.analogWrite(pwmPinRL, i)
+                    a.analogWrite(pwmPinRR, i)
                 Movement(150)
       
             if j.get_button(square):
                 print('square')
                 setDirection(1,0,1,0,150)
+                for i in range(0,150,2):
+                    a.analogWrite(pwmPinFR, i)
+                    a.analogWrite(pwmPinFL, i)
+                    a.analogWrite(pwmPinRL, i)
+                    a.analogWrite(pwmPinRR, i)
                 Movement(150)
               
             if j.get_button(triangle):
                 print('triangle')
                 setDirection(1,1,1,1,150)
+                for i in range(0,150,2):
+                    a.analogWrite(pwmPinFR, i)
+                    a.analogWrite(pwmPinFL, i)
+                    a.analogWrite(pwmPinRL, i)
+                    a.analogWrite(pwmPinRR, i)
                 Movement(150)
 
                  
@@ -113,6 +128,11 @@ while True:
             if j.get_button(circle):
               print('circle')
               setDirection(0,1,0,1,150)
+              for i in range(0,150,2):
+                    a.analogWrite(pwmPinFR, i)
+                    a.analogWrite(pwmPinFL, i)
+                    a.analogWrite(pwmPinRL, i)
+                    a.analogWrite(pwmPinRR, i)
               Movement(150)
           
            
