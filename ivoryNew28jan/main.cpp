@@ -2,21 +2,34 @@
 
 's' means Side Sensor Array
 'd' means Down Sensor Array
-
+int flag in setDirection() function is to be made 0 when we are starting from rest
 
 */
-
+// Auto calibrating line sensors LSS05
+// down sensors
 #define O1 1
 #define O2 2
 #define O3 3
 #define O4 4
 #define O5 5
-
+// side sensors
 #define L1 6
 #define L2 7
 #define L3 8
 #define L4 9
 #define L5 10
+
+// Motor drivers MD13S or MD10C
+// direction Pins
+#define dirPinFR 7
+#define dirPinFL 8
+#define dirPinRR 4
+#define dirPinRL 2
+// pwm Pins
+#define pwmPinFR 6
+#define pwmPinFL 9
+#define pwmPinRL 3
+#define pwmPinRR 5
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 // utility functions
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -80,20 +93,29 @@ void allStop()
     analogWrite(pwmPinRR, i);
 
 }
-void setDirection(bool FR, bool FL, bool RL, bool RR, int speedValue)
+void setDirection(bool FR, bool FL, bool RL, bool RR, int speedValue, int flag)
 {
-    digitalWrite(dirPinFR, FR);
-    digitalWrite(dirPinFL, FL);
-    digitalWrite(dirPinRL, RL);
-    digitalWrite(dirPinRR, RR);
-    for(int i = 0; i < speedValue; i+=2)
+    if(flag==0)
     {
-        analogWrite(pwmPinFR, i);
-        analogWrite(pwmPinFL, i);
-        analogWrite(pwmPinRL, i);
-        analogWrite(pwmPinRR, i);
+        digitalWrite(dirPinFR, FR);
+        digitalWrite(dirPinFL, FL);
+        digitalWrite(dirPinRL, RL);
+        digitalWrite(dirPinRR, RR);
+        for(int i = 0; i < speedValue; i+=2)
+        {
+            analogWrite(pwmPinFR, i);
+            analogWrite(pwmPinFL, i);
+            analogWrite(pwmPinRL, i);
+            analogWrite(pwmPinRR, i);
+        }
     }
-
+    else
+    {
+        analogWrite(pwmPinFR, speedValue);
+        analogWrite(pwmPinFL, speedValue);
+        analogWrite(pwmPinRL, speedValue);
+        analogWrite(pwmPinRR, speedValue);
+    }
 }
 void Movement(int speedValue)
 {
@@ -102,34 +124,34 @@ void Movement(int speedValue)
     analogWrite(pwmPinRR, speedValue);
     analogWrite(pwmPinRL, speedValue);
 }
-void forwardMovement()
+void forwardMovement(int speedValue, int flag=1)
 {
-    setDirection(1,1,1,1,150);//when button pressed (do once)
-    Movement(150);//keep on going till button is pressed (repeatedly)
+    setDirection(1,1,1,1,speedValue,flag);//when button pressed (do once)
+    Movement(speedValue);//keep on going till button is pressed (repeatedly)
 }
-void backwardMovement()
+void backwardMovement(int speedValue, int flag=1)
 {
-    setDirection(0,0,0,0,150);//when button pressed (do once)
-    Movement(150);//keep on going till button is pressed (repeatedly)
+    setDirection(0,0,0,0,speedValue,flag);//when button pressed (do once)
+    Movement(speedValue);//keep on going till button is pressed (repeatedly)
 }
-void leftMovement()
+void leftMovement(int speedValue, int flag=1)
 {
-    setDirection(1,0,1,0,150);//when button pressed (do once)
-    Movement(150);//keep on going till button is pressed (repeatedly)
+    setDirection(1,0,1,0,speedValue,flag);//when button pressed (do once)
+    Movement(speedValue);//keep on going till button is pressed (repeatedly)
 }
-void rightMovement()
+void rightMovement(int speedValue, int flag=1)
 {
-    setDirection(0,1,0,1,150);//when button pressed (do once)
-    Movement(150);//keep on going till button is pressed (repeatedly)
+    setDirection(0,1,0,1,speedValue,flag);//when button pressed (do once)
+    Movement(speedValue);//keep on going till button is pressed (repeatedly)
 }
-void diagonalMovement()
+void diagonalMovement(int speedValue)
 {
 
     digitalWrite(dirPinFR,LOW);
     digitalWrite(dirPinRL,LOW);
     analogWrite(pwmPinFL,0);
     analogWrite(pwmPinRR,0);
-    for(int i=0; i<150; i+=2)
+    for(int i=0; i<speedValue; i+=2)
     {
         analogWrite(pwmPinFR, i);
         analogWrite(pwmPinRL, i);
@@ -143,14 +165,14 @@ bool itFollows(char orientation)
         {
             while(middleSensors('s')!=true)
             {
-                //move forward
+                forwardMovement(50);//enter a slow speedValue here
             }
         }
         if(digitalRead(L5)==1)
         {
             while(middleSensors('s')!=true)
             {
-                //move back
+                backwardMovement(50);//enter a slow speedValue here
             }
         }
     }
@@ -160,14 +182,14 @@ bool itFollows(char orientation)
         {
             while(middleSensors('d')!=true)
             {
-                //move left
+                leftMovement(50);//enter a slow speedValue here
             }
         }
         if(digitalRead(O5)==1)
         {
             while(middleSensors('d')!=true)
             {
-                //move right
+                rightMovement(50);//enter a slow speedValue here
             }
         }
     }
@@ -187,11 +209,11 @@ void loop()
 
     while(allSensors('s')!=1)
     {
-        diagonalMovement();
+        diagonalMovement(150);
     }
     while(middleSensors('d')!=1)
     {
-        diagonalMovement();
+        diagonalMovement(150);
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -200,11 +222,11 @@ void loop()
 
     while(allSensors('d')!=1 && itFollows('d'))
     {
-        backwardMovement();
+        backwardMovement(150);
     }
     while(middleSensors('s')!=1)
     {
-        backwardMovement();
+        backwardMovement(100);//a little slow speedValue than previous instance
     }
     allStop();
     //align with manual bot
@@ -214,31 +236,33 @@ void loop()
     // TZ1
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    rightMovement(150,0); // here flag=0 because we are starting from rest now
     for(int itr_TZ1 = 1; itr_TZ1 <=2; itr_TZ1++)
     {
         while(allSensors('s')!=1 && itFollows('s'))
         {
-            rightMovement();
+            rightMovement(150);
         }
     }
     while(middleSensors('d')!=1)
     {
-        rightMovement();
+        rightMovement(100);//a little slow speedValue than previous instance
     }
     allStop();
     //throw
     //feedback
     //anything else (CV) ?
+    leftMovement(150,0); // here flag=0 because we are starting from rest now
     for(int itr_TZ1 = 1; itr_TZ1 <=2; itr_TZ1++)
     {
         while(allSensors('s')!=1 && itFollows('s'))
         {
-            leftMovement();
+            leftMovement(150);
         }
     }
     while(middleSensors('d')!=1)
     {
-        leftMovement();
+        leftMovement(100);//a little slow speedValue than previous instance
     }
     allStop();
     //align with manual bot
@@ -250,13 +274,14 @@ void loop()
     // going towards start of TZ2
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    backwardMovement(150,0); // here flag=0 because we are starting from rest now
     while(allSensors('d')!=1 && itFollows('d'))
     {
-        backwardMovement();
+        backwardMovement(150);
     }
     while(middleSensors('s')!=1)
     {
-        backwardMovement();
+        backwardMovement(100);//a little slow speedValue than previous instance
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -267,27 +292,28 @@ void loop()
     {
         while(allSensors('s')!=1 && itFollows('s'))
         {
-            rightMovement();
+            rightMovement(150);
         }
     }
     while(middleSensors('d')!=1)
     {
-        rightMovement();
+        rightMovement(100);//a little slow speedValue than previous instance
     }
     allStop();
     //throw
     //feedback
     //anything else (CV) ?
+    leftMovement(150,0); // here flag=0 because we are starting from rest now
     for(int itr_TZ1 = 1; itr_TZ1 <=2; itr_TZ1++)
     {
         while(allSensors('s')!=1 && itFollows('s'))
         {
-            leftMovement();
+            leftMovement(150);
         }
     }
     while(middleSensors('d')!=1)
     {
-       leftMovement();
+        leftMovement(100);//a little slow speedValue than previous instance
     }
     allStop();
     //check manual bot availability
@@ -300,31 +326,34 @@ void loop()
     // TZ3
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    rightMovement(150,0); // here flag=0 because we are starting from rest now
     for(int itr_TZ3 = 1; itr_TZ3 <=5; itr_TZ3++)
     {
         while(allSensors('s')!=1 && itFollows('s'))
         {
-            rightMovement();
+            rightMovement(150);
         }
     }
     while(middleSensors('d')!=1)
     {
-        rightMovement();
+        rightMovement(100);//a little slow speedValue than previous instance
     }
     allStop();
     //throw
     //feedback
     //anything else (CV) ?
+
+    leftMovement(150,0); // here flag=0 because we are starting from rest now
     for(int itr_TZ1 = 1; itr_TZ1 <=5; itr_TZ1++)
     {
         while(allSensors('s')!=1 && itFollows('s'))
         {
-           leftMovement();
+            leftMovement(150);
         }
     }
     while(middleSensors('d')!=1)
     {
-        leftMovement();
+        leftMovement(100);//a little slow speedValue than previous instance
     }
     allStop();
     //align with manual bot
