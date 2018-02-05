@@ -79,7 +79,7 @@ void loop()
     digitalWrite(dirPinFL, HIGH);
     digitalWrite(dirPinRR, HIGH);
     digitalWrite(dirPinRL, HIGH);
-    while (digitalRead(O1) == 1 && digitalRead(O2) == 1 && digitalRead(O3) == 1 && digitalRead(O4) == 1 && digitalRead(O5) == 1)
+    while (digitalRead(O1) == 0 && digitalRead(O2) == 1 && digitalRead(O3) == 1 && digitalRead(O4) == 1 && digitalRead(O5) == 0)
     {
       analogWrite(pwmPinFR, 127);
     analogWrite(pwmPinRR, 127);
@@ -137,9 +137,11 @@ void loop()
 //      digitalWrite(dirPinRL, LOW);
 //    }
 //  }
-  if ((a == 1 && b == 1 && c == 1 && d == 1 && e == 0)||(a == 1 && b == 1 && c == 1 && d == 0 && e == 0))
+  if ((a == 1 && b == 1 && c == 1 && d == 1 && e == 0)||(a == 1 && b == 1 && c == 1 && d == 0 && e == 0)||(a == 1 && b == 1 && c == 0 && d == 0 && e == 0)||(a == 1 && b == 0 && c == 0 && d == 0 && e == 0))
   {//left
-    while ((digitalRead(O1) == 1 && digitalRead(O2) == 1 && digitalRead(O3) == 1 && digitalRead(O4) == 1 && digitalRead(O5) == 0)||(digitalRead(O1) == 1 && digitalRead(O2) == 1 && digitalRead(O3) == 1 && digitalRead(O4) == 1 && digitalRead(O5) == 0))
+    while ((digitalRead(O1) == 1 && digitalRead(O2) == 1 && digitalRead(O3) == 1 
+    && digitalRead(O4) == 1 && digitalRead(O5) == 0)||(digitalRead(O1) == 1 && digitalRead(O2) == 1 && digitalRead(O3) == 1 && digitalRead(O4) == 0 && digitalRead(O5) == 0)||
+    (digitalRead(O1) == 1 && digitalRead(O2) == 1 && digitalRead(O3) == 0 && digitalRead(O4) == 0 && digitalRead(O5) == 0)||(digitalRead(O1) == 1 && digitalRead(O2) == 0 && digitalRead(O3) == 0 && digitalRead(O4) == 0 && digitalRead(O5) == 0))
     {
       analogWrite(pwmPinFR, 150);
       analogWrite(pwmPinRR, 150);
@@ -151,9 +153,11 @@ void loop()
       digitalWrite(dirPinRL, HIGH);
     }
   }
-  if ((a == 0 && b == 1 && c == 1 && d == 1 && e == 1)||(a == 0 && b == 0 && c == 1 && d == 1 && e == 1))
+  if ((a == 0 && b == 1 && c == 1 && d == 1 && e == 1)||(a == 0 && b == 0 && c == 1 && d == 1 && e == 1)||(a == 0 && b == 0 && c == 0 && d == 1 && e == 1)||(a == 0 && b == 0 && c == 0 && d == 1 && e == 1)||(a == 0 && b == 0 && c == 0 && d == 0 && e == 1))
   {//right
-    while ((digitalRead(O1) == 0 && digitalRead(O2) == 1 && digitalRead(O3) == 1 && digitalRead(O4) == 1 && digitalRead(O5) == 1)||(digitalRead(O1) == 0 && digitalRead(O2) == 0 && digitalRead(O3) == 1 && digitalRead(O4) == 1 && digitalRead(O5) == 1))
+    while ((digitalRead(O1) == 0 && digitalRead(O2) == 1 && digitalRead(O3) == 1 
+    && digitalRead(O4) == 1 && digitalRead(O5) == 1)||(digitalRead(O1) == 0 && digitalRead(O2) == 0 && digitalRead(O3) == 1 && digitalRead(O4) == 1 && digitalRead(O5) == 1)||
+    (digitalRead(O1) == 0 && digitalRead(O2) == 0 && digitalRead(O3) == 0 && digitalRead(O4) == 1 && digitalRead(O5) == 1)||(digitalRead(O1) == 0 && digitalRead(O2) == 0 && digitalRead(O3) == 0 && digitalRead(O4) == 0 && digitalRead(O5) == 1))
     {
       analogWrite(pwmPinFR, 127);
       analogWrite(pwmPinRR, 127);
