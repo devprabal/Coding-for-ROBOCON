@@ -7,17 +7,17 @@ int flag in setDirection() function is to be made 0 when we are starting from re
 */
 // Auto calibrating line sensors LSS05
 // down sensors
-#define O1 1
-#define O2 2
-#define O3 3
-#define O4 4
-#define O5 5
-// side sensors
-#define L1 6
-#define L2 7
-#define L3 8
-#define L4 9
-#define L5 10
+#define O1 A0
+#define O2 A1
+#define O3 A2
+#define O4 A3
+#define O5 A4
+// side sensors // we can also use digital pins, no problem in that
+#define L1 A8
+#define L2 A9
+#define L3 A10
+#define L4 A11
+#define L5 A12
 
 // Motor drivers MD13S or MD10C
 // direction Pins
@@ -198,7 +198,24 @@ bool itFollows(char orientation)
 
 void setup()
 {
-
+    pinMode(O1, INPUT);
+    pinMode(O2, INPUT);
+    pinMode(O3, INPUT);
+    pinMode(O4, INPUT);
+    pinMode(O5, INPUT);
+    pinMode(L1, INPUT);
+    pinMode(L2, INPUT);
+    pinMode(L3, INPUT);
+    pinMode(L4, INPUT);
+    pinMode(L5, INPUT);
+    pinMode(pwmPinFR,OUTPUT);
+    pinMode(pwmPinRR,OUTPUT);
+    pinMode(pwmPinFL,OUTPUT);
+    pinMode(pwmPinRL,OUTPUT);
+    pinMode(dirPinFR,OUTPUT);
+    pinMode(dirPinFL,OUTPUT);
+    pinMode(dirPinRR,OUTPUT);
+    pinMode(dirPinRL,OUTPUT);
 }
 
 void loop()

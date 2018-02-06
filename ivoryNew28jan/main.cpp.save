@@ -5,18 +5,31 @@
 int flag in setDirection() function is to be made 0 when we are starting from rest
 
 */
+// Auto calibrating line sensors LSS05
+// down sensors
+#define O1 A0
+#define O2 A1
+#define O3 A2
+#define O4 A3
+#define O5 A4
+// side sensors
+#define L1 A8
+#define L2 A9
+#define L3 A10
+#define L4 A11
+#define L5 A12
 
-#define O1 1
-#define O2 2
-#define O3 3
-#define O4 4
-#define O5 5
-
-#define L1 6
-#define L2 7
-#define L3 8
-#define L4 9
-#define L5 10
+// Motor drivers MD13S or MD10C
+// direction Pins
+#define dirPinFR 7
+#define dirPinFL 8
+#define dirPinRR 4
+#define dirPinRL 2
+// pwm Pins
+#define pwmPinFR 6
+#define pwmPinFL 9
+#define pwmPinRL 3
+#define pwmPinRR 5
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 // utility functions
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -261,7 +274,7 @@ void loop()
     // going towards start of TZ2
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    backwardMovement(150,0);
+    backwardMovement(150,0); // here flag=0 because we are starting from rest now
     while(allSensors('d')!=1 && itFollows('d'))
     {
         backwardMovement(150);
@@ -290,6 +303,7 @@ void loop()
     //throw
     //feedback
     //anything else (CV) ?
+    leftMovement(150,0); // here flag=0 because we are starting from rest now
     for(int itr_TZ1 = 1; itr_TZ1 <=2; itr_TZ1++)
     {
         while(allSensors('s')!=1 && itFollows('s'))
@@ -299,7 +313,7 @@ void loop()
     }
     while(middleSensors('d')!=1)
     {
-       leftMovement(100);//a little slow speedValue than previous instance
+        leftMovement(100);//a little slow speedValue than previous instance
     }
     allStop();
     //check manual bot availability
@@ -312,6 +326,7 @@ void loop()
     // TZ3
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    rightMovement(150,0); // here flag=0 because we are starting from rest now
     for(int itr_TZ3 = 1; itr_TZ3 <=5; itr_TZ3++)
     {
         while(allSensors('s')!=1 && itFollows('s'))
@@ -327,11 +342,13 @@ void loop()
     //throw
     //feedback
     //anything else (CV) ?
+
+    leftMovement(150,0); // here flag=0 because we are starting from rest now
     for(int itr_TZ1 = 1; itr_TZ1 <=5; itr_TZ1++)
     {
         while(allSensors('s')!=1 && itFollows('s'))
         {
-           leftMovement(150);
+            leftMovement(150);
         }
     }
     while(middleSensors('d')!=1)
