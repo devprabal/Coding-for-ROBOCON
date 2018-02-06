@@ -1,5 +1,4 @@
-#include<Servo.h>
-Servo gripper;
+/////////////////////////XBEE Transmitter and Encoder Part on Gripper/////////////////////////
 volatile long encoderPos = 0;
 volatile long countRotation = 0;
 unsigned long prior_count = 0;
@@ -113,4 +112,76 @@ void loop() {
     delay(10);
   }
 }
+/////////////////////////XBEE Receiver and Servo Part on Gripper/////////////////////////
+/*
+#include<Servo.h>
+Servo gripper;
+ 
+int pos=0;
 
+//Variables
+bool started= false;//True: Message is strated
+bool ended   = false;//True: Message is finished 
+char incomingByte ; //Variable to store the incoming byte
+char msg;    //Message - array from 0 to 2 (3 values - PWM - e.g. 240)
+byte index;     //Index of array
+
+void setup() {
+
+  //Start the serial communication
+  Serial.begin(9600); //Baud rate must be the same as is on xBee module
+  
+  gripper.attach(9);
+}
+
+void loop() {
+  
+  while (Serial.available()>0){
+    //Read the incoming byte
+
+    incomingByte = Serial.read();
+    //Start the message when the '<' symbol is received
+    if(incomingByte == '<')
+    {
+     started = true;
+     msg = '\0'; // Throw away any incomplete packet
+   }
+   //End the message when the '>' symbol is received
+   else if(incomingByte == '>')
+   {
+     ended = true;
+     break; // Done reading - exit from while loop!
+   }
+   //Read the message!
+   else
+   {
+     if(started && (!ended)) // Make sure there is room
+     {
+       msg = incomingByte; // Add char to array
+
+     }
+   }
+ }
+ 
+ if(started && ended)
+ 
+  {
+   int pos = atoi(msg);
+   
+   if(msg==1)
+   {
+    gripper.write(120);
+   }
+   if(msg==0)
+   {
+    gripper.write(180);
+   }
+   //Serial.println(value); //Only for debugging
+   msg ='\0';
+   started = false;
+   ended = false;
+ }
+
+}
+ 
+/*
