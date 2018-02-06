@@ -80,13 +80,13 @@ void loop() {
         if (deg > 359)
 
         {
-          digitalWrite(8, LOW);
-          analogWrite(10, HIGH);
+          digitalWrite(dirPin, LOW);
+          analogWrite(pwmPin, HIGH);
         }
         if (deg < 1)
         {
-          digitalWrite(8, HIGH);
-          analogWrite(10, HIGH);
+          digitalWrite(dirPin, HIGH);
+          analogWrite(pwmPin, HIGH);
         }
       }
     }
