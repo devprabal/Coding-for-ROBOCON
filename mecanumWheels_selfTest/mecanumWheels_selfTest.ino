@@ -30,7 +30,7 @@ void Movement(int speedValue)
     analogWrite(pwmPinRR, speedValue);
     analogWrite(pwmPinRL, speedValue);
 }
-void ease_out(speedValue)
+void ease_out(int speedValue)
 {
   for(int i = speedValue; i >= 0; i-=2)
   {
