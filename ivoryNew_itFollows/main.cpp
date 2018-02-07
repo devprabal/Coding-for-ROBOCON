@@ -259,7 +259,7 @@ bool itFollows(char orientation)
             digitalWrite(dirPinRL, LOW);
         }
     }
-    }
+
     if(orientation=='d')
     {
         int itFollows_speedValue = 102;
