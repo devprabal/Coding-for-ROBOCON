@@ -142,22 +142,22 @@ int itFollows_speedValue = 102;
                 && digitalRead(O4) == ON && digitalRead(O5) == OFF) || (digitalRead(O1) == ON && digitalRead(O2) == ON && digitalRead(O3) == ON && digitalRead(O4) == OFF && digitalRead(O5) == OFF) ||
                 (digitalRead(O1) == ON && digitalRead(O2) == ON && digitalRead(O3) == OFF && digitalRead(O4) == OFF && digitalRead(O5) == OFF) || (digitalRead(O1) == ON && digitalRead(O2) == OFF && digitalRead(O3) == OFF && digitalRead(O4) == OFF && digitalRead(O5) == OFF))
         {
-            //      analogWrite(pwmPinFR, 70);
-            //      analogWrite(pwmPinRR, 70);
-            //      analogWrite(pwmPinFL, 51);
-            //      analogWrite(pwmPinRL, 51);
-            //      digitalWrite(dirPinFR, HIGH);
-            //      digitalWrite(dirPinFL, HIGH);
-            //      digitalWrite(dirPinRR, HIGH);
-            //      digitalWrite(dirPinRL, HIGH);
-            analogWrite(pwmPinFR, OFF);
-            analogWrite(pwmPinRR, itFollows_speedValue);
-            analogWrite(pwmPinFL, itFollows_speedValue);
-            analogWrite(pwmPinRL, OFF);
-            digitalWrite(dirPinFR, LOW);
-            digitalWrite(dirPinFL, LOW);
-            digitalWrite(dirPinRR, LOW);
-            digitalWrite(dirPinRL, LOW);
+                  analogWrite(pwmPinFR, 70);
+                  analogWrite(pwmPinRR, 70);
+                  analogWrite(pwmPinFL, 70);
+                  analogWrite(pwmPinRL, 70);
+                  digitalWrite(dirPinFR, LOW);
+                  digitalWrite(dirPinFL, HIGH);
+                  digitalWrite(dirPinRR, LOW);
+                  digitalWrite(dirPinRL, HIGH);
+//            analogWrite(pwmPinFR, 0);
+//            analogWrite(pwmPinRR, itFollows_speedValue/2);
+//            analogWrite(pwmPinFL, itFollows_speedValue/2);
+//            analogWrite(pwmPinRL, 0);
+//            digitalWrite(dirPinFR, LOW);
+//            digitalWrite(dirPinFL, LOW);
+//            digitalWrite(dirPinRR, LOW);
+//            digitalWrite(dirPinRL, LOW);
         }
     }
     if ((digitalRead(O1) == OFF && digitalRead(O2) == ON && digitalRead(O3) == ON && digitalRead(O4) == ON && digitalRead(O5) == ON) || (digitalRead(O1) == OFF && digitalRead(O2) == OFF && digitalRead(O3) == ON && digitalRead(O4) == ON && digitalRead(O5) == ON) || (digitalRead(O1) == OFF && digitalRead(O2) == OFF && digitalRead(O3) == OFF && digitalRead(O4) == ON && digitalRead(O5) == ON)
@@ -170,22 +170,22 @@ int itFollows_speedValue = 102;
                 && digitalRead(O4) == ON && digitalRead(O5) == ON) || (digitalRead(O1) == OFF && digitalRead(O2) == OFF && digitalRead(O3) == ON && digitalRead(O4) == ON && digitalRead(O5) == ON) ||
                 (digitalRead(O1) == OFF && digitalRead(O2) == OFF && digitalRead(O3) == OFF && digitalRead(O4) == ON && digitalRead(O5) == ON) || (digitalRead(O1) == OFF && digitalRead(O2) == OFF && digitalRead(O3) == OFF && digitalRead(O4) == OFF && digitalRead(O5) == ON))
         {
-            //      analogWrite(pwmPinFR, 51);
-            //      analogWrite(pwmPinRR, 51);
-            //      analogWrite(pwmPinFL, 70);
-            //      analogWrite(pwmPinRL, 70);
-            //      digitalWrite(dirPinFR, HIGH);
-            //      digitalWrite(dirPinFL, HIGH);
-            //      digitalWrite(dirPinRR, HIGH);
-            //      digitalWrite(dirPinRL, HIGH);
-            analogWrite(pwmPinFR, itFollows_speedValue);
-            analogWrite(pwmPinRR, OFF);
-            analogWrite(pwmPinFL, OFF);
-            analogWrite(pwmPinRL, itFollows_speedValue);
-            digitalWrite(dirPinFR, LOW);
-            digitalWrite(dirPinFL, LOW);
-            digitalWrite(dirPinRR, LOW);
-            digitalWrite(dirPinRL, LOW);
+                  analogWrite(pwmPinFR, 70);
+                  analogWrite(pwmPinRR, 70);
+                  analogWrite(pwmPinFL, 70);
+                  analogWrite(pwmPinRL, 70);
+                  digitalWrite(dirPinFR, HIGH);
+                  digitalWrite(dirPinFL, LOW);
+                  digitalWrite(dirPinRR, HIGH);
+                  digitalWrite(dirPinRL, LOW);
+//            analogWrite(pwmPinFR, itFollows_speedValue/2);
+//            analogWrite(pwmPinRR, 0);
+//            analogWrite(pwmPinFL, 0);
+//            analogWrite(pwmPinRL, itFollows_speedValue/2);
+//            digitalWrite(dirPinFR, LOW);
+//            digitalWrite(dirPinFL, LOW);
+//            digitalWrite(dirPinRR, LOW);
+//            digitalWrite(dirPinRL, LOW);
         }
     }
     if ((digitalRead(O1) == ON && digitalRead(O2) == ON && digitalRead(O3) == ON && digitalRead(O4) == ON && digitalRead(O5) == ON))
