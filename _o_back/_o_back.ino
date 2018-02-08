@@ -1,3 +1,5 @@
+bool OFF = 1;
+bool ON = 0;
 //// down sensors
 #define O1 A0
 #define O2 A1
@@ -59,17 +61,17 @@ void loop()
 //    int j = digitalRead(L5);
 
   /*  /////////////// for going back from where the error was generated (specified by tas_no) when it stopped at allZero ///////////////
-    if (a == 0 && b == 0 && c == 0 && d == 0 && e == 0)
+    if (a == OFF && b == OFF && c == OFF && d == OFF && e == OFF)
     {
       if (task_no == 2)
       {
         //last task was left or (left and forward) that caused it to stop
         //now go back south-east
-        while (digitalRead(O5 != 1))
+        while (digitalRead(O5 != ON))
         {
           analogWrite(pwmPinFR, 70);
-          analogWrite(pwmPinRR, 0);
-          analogWrite(pwmPinFL, 0);
+          analogWrite(pwmPinRR, OFF);
+          analogWrite(pwmPinFL, OFF);
           analogWrite(pwmPinRL, 70);
           digitalWrite(dirPinFR, LOW);
           digitalWrite(dirPinFL, LOW);
@@ -81,24 +83,24 @@ void loop()
       {
         //last task was right or (right and forward) that caused it to stop
         //now go back south-west
-        while (digitalRead(O1 != 1))
+        while (digitalRead(O1 != ON))
         {
-          analogWrite(pwmPinFR, 0);
+          analogWrite(pwmPinFR, OFF);
           analogWrite(pwmPinRR, 70);
           analogWrite(pwmPinFL, 70);
-          analogWrite(pwmPinRL, 0);
+          analogWrite(pwmPinRL, OFF);
           digitalWrite(dirPinFR, LOW);
           digitalWrite(dirPinFL, LOW);
           digitalWrite(dirPinRR, LOW);
           digitalWrite(dirPinRL, LOW);
         }
       }
-      while (digitalRead(O1) == 0 && digitalRead(O2) == 0 && digitalRead(O3) == 0 && digitalRead(O4) == 0 && digitalRead(O5) == 0)
+      while (digitalRead(O1) == OFF && digitalRead(O2) == OFF && digitalRead(O3) == OFF && digitalRead(O4) == OFF && digitalRead(O5) == OFF)
       {
-        analogWrite(pwmPinFR, 0);
-        analogWrite(pwmPinRR, 0);
-        analogWrite(pwmPinFL, 0);
-        analogWrite(pwmPinRL, 0);
+        analogWrite(pwmPinFR, OFF);
+        analogWrite(pwmPinRR, OFF);
+        analogWrite(pwmPinFL, OFF);
+        analogWrite(pwmPinRL, OFF);
         digitalWrite(dirPinFR, HIGH);
         digitalWrite(dirPinFL, LOW);
         digitalWrite(dirPinRR, LOW);
@@ -106,7 +108,7 @@ void loop()
       }
     }*/
 int itFollows_speedValue = 102;
-    if ((digitalRead(O1) == 0 && digitalRead(O2) == 1 && digitalRead(O3) == 1 && digitalRead(O4) == 1 && digitalRead(O5) == 0) || (digitalRead(O1) == 0 && digitalRead(O2) == 1 && digitalRead(O3) == 1 && digitalRead(O4) == 0 && digitalRead(O5) == 0) || (digitalRead(O1) == 0 && digitalRead(O2) == 0 && digitalRead(O3) == 1 && digitalRead(O4) == 1 && digitalRead(O5) == 0))
+    if ((digitalRead(O1) == OFF && digitalRead(O2) == ON && digitalRead(O3) == ON && digitalRead(O4) == ON && digitalRead(O5) == OFF) || (digitalRead(O1) == OFF && digitalRead(O2) == ON && digitalRead(O3) == ON && digitalRead(O4) == OFF && digitalRead(O5) == OFF) || (digitalRead(O1) == OFF && digitalRead(O2) == OFF && digitalRead(O3) == ON && digitalRead(O4) == ON && digitalRead(O5) == OFF))
     {
 
         analogWrite(pwmPinFR, itFollows_speedValue);
@@ -117,8 +119,8 @@ int itFollows_speedValue = 102;
         digitalWrite(dirPinFL, LOW);
         digitalWrite(dirPinRR, LOW);
         digitalWrite(dirPinRL, LOW);
-        while ((digitalRead(O1) == 0 && digitalRead(O2) == 1 && digitalRead(O3) == 1 && digitalRead(O4) == 1 && digitalRead(O5) == 0) || (digitalRead(O1) == 0 && digitalRead(O2) == 1 && digitalRead(O3) == 1 && digitalRead(O4) == 0 && digitalRead(O5) == 0)
-                || (digitalRead(O1) == 0 && digitalRead(O2) == 0 && digitalRead(O3) == 1 && digitalRead(O4) == 1 && digitalRead(O5) == 0))
+        while ((digitalRead(O1) == OFF && digitalRead(O2) == ON && digitalRead(O3) == ON && digitalRead(O4) == ON && digitalRead(O5) == OFF) || (digitalRead(O1) == OFF && digitalRead(O2) == ON && digitalRead(O3) == ON && digitalRead(O4) == OFF && digitalRead(O5) == OFF)
+                || (digitalRead(O1) == OFF && digitalRead(O2) == OFF && digitalRead(O3) == ON && digitalRead(O4) == ON && digitalRead(O5) == OFF))
         {
             analogWrite(pwmPinFR, itFollows_speedValue);
             analogWrite(pwmPinRR, itFollows_speedValue);
@@ -131,14 +133,14 @@ int itFollows_speedValue = 102;
         }
     }
 
-    if ((digitalRead(O1) == 1 && digitalRead(O2) == 1 && digitalRead(O3) == 1 && digitalRead(O4) == 1 && digitalRead(O5) == 0) || (digitalRead(O1) == 1 && digitalRead(O2) == 1 && digitalRead(O3) == 1 && digitalRead(O4) == 0 && digitalRead(O5) == 0) || (digitalRead(O1) == 1 && digitalRead(O2) == 1 && digitalRead(O3) == 0 && digitalRead(O4) == 0 && digitalRead(O5) == 0)
-            || (digitalRead(O1) == 1 && digitalRead(O2) == 0 && digitalRead(O3) == 0 && digitalRead(O4) == 0 && digitalRead(O5) == 0))
+    if ((digitalRead(O1) == ON && digitalRead(O2) == ON && digitalRead(O3) == ON && digitalRead(O4) == ON && digitalRead(O5) == OFF) || (digitalRead(O1) == ON && digitalRead(O2) == ON && digitalRead(O3) == ON && digitalRead(O4) == OFF && digitalRead(O5) == OFF) || (digitalRead(O1) == ON && digitalRead(O2) == ON && digitalRead(O3) == OFF && digitalRead(O4) == OFF && digitalRead(O5) == OFF)
+            || (digitalRead(O1) == ON && digitalRead(O2) == OFF && digitalRead(O3) == OFF && digitalRead(O4) == OFF && digitalRead(O5) == OFF))
     {
         //left or (diagonal left //south-west)
         //task_no = 2;
-        while ((digitalRead(O1) == 1 && digitalRead(O2) == 1 && digitalRead(O3) == 1
-                && digitalRead(O4) == 1 && digitalRead(O5) == 0) || (digitalRead(O1) == 1 && digitalRead(O2) == 1 && digitalRead(O3) == 1 && digitalRead(O4) == 0 && digitalRead(O5) == 0) ||
-                (digitalRead(O1) == 1 && digitalRead(O2) == 1 && digitalRead(O3) == 0 && digitalRead(O4) == 0 && digitalRead(O5) == 0) || (digitalRead(O1) == 1 && digitalRead(O2) == 0 && digitalRead(O3) == 0 && digitalRead(O4) == 0 && digitalRead(O5) == 0))
+        while ((digitalRead(O1) == ON && digitalRead(O2) == ON && digitalRead(O3) == ON
+                && digitalRead(O4) == ON && digitalRead(O5) == OFF) || (digitalRead(O1) == ON && digitalRead(O2) == ON && digitalRead(O3) == ON && digitalRead(O4) == OFF && digitalRead(O5) == OFF) ||
+                (digitalRead(O1) == ON && digitalRead(O2) == ON && digitalRead(O3) == OFF && digitalRead(O4) == OFF && digitalRead(O5) == OFF) || (digitalRead(O1) == ON && digitalRead(O2) == OFF && digitalRead(O3) == OFF && digitalRead(O4) == OFF && digitalRead(O5) == OFF))
         {
             //      analogWrite(pwmPinFR, 70);
             //      analogWrite(pwmPinRR, 70);
@@ -148,25 +150,25 @@ int itFollows_speedValue = 102;
             //      digitalWrite(dirPinFL, HIGH);
             //      digitalWrite(dirPinRR, HIGH);
             //      digitalWrite(dirPinRL, HIGH);
-            analogWrite(pwmPinFR, 0);
+            analogWrite(pwmPinFR, OFF);
             analogWrite(pwmPinRR, itFollows_speedValue);
             analogWrite(pwmPinFL, itFollows_speedValue);
-            analogWrite(pwmPinRL, 0);
+            analogWrite(pwmPinRL, OFF);
             digitalWrite(dirPinFR, LOW);
             digitalWrite(dirPinFL, LOW);
             digitalWrite(dirPinRR, LOW);
             digitalWrite(dirPinRL, LOW);
         }
     }
-    if ((digitalRead(O1) == 0 && digitalRead(O2) == 1 && digitalRead(O3) == 1 && digitalRead(O4) == 1 && digitalRead(O5) == 1) || (digitalRead(O1) == 0 && digitalRead(O2) == 0 && digitalRead(O3) == 1 && digitalRead(O4) == 1 && digitalRead(O5) == 1) || (digitalRead(O1) == 0 && digitalRead(O2) == 0 && digitalRead(O3) == 0 && digitalRead(O4) == 1 && digitalRead(O5) == 1)
-            || (digitalRead(O1) == 0 && digitalRead(O2) == 0 && digitalRead(O3) == 0 && digitalRead(O4) == 1 && digitalRead(O5) == 1)
-            || (digitalRead(O1) == 0 && digitalRead(O2) == 0 && digitalRead(O3) == 0 && digitalRead(O4) == 0 && digitalRead(O5) == 1))
+    if ((digitalRead(O1) == OFF && digitalRead(O2) == ON && digitalRead(O3) == ON && digitalRead(O4) == ON && digitalRead(O5) == ON) || (digitalRead(O1) == OFF && digitalRead(O2) == OFF && digitalRead(O3) == ON && digitalRead(O4) == ON && digitalRead(O5) == ON) || (digitalRead(O1) == OFF && digitalRead(O2) == OFF && digitalRead(O3) == OFF && digitalRead(O4) == ON && digitalRead(O5) == ON)
+            || (digitalRead(O1) == OFF && digitalRead(O2) == OFF && digitalRead(O3) == OFF && digitalRead(O4) == ON && digitalRead(O5) == ON)
+            || (digitalRead(O1) == OFF && digitalRead(O2) == OFF && digitalRead(O3) == OFF && digitalRead(O4) == OFF && digitalRead(O5) == ON))
     {
         //right or (diagonal right // south-east)
         //task_no = 3;
-        while ((digitalRead(O1) == 0 && digitalRead(O2) == 1 && digitalRead(O3) == 1
-                && digitalRead(O4) == 1 && digitalRead(O5) == 1) || (digitalRead(O1) == 0 && digitalRead(O2) == 0 && digitalRead(O3) == 1 && digitalRead(O4) == 1 && digitalRead(O5) == 1) ||
-                (digitalRead(O1) == 0 && digitalRead(O2) == 0 && digitalRead(O3) == 0 && digitalRead(O4) == 1 && digitalRead(O5) == 1) || (digitalRead(O1) == 0 && digitalRead(O2) == 0 && digitalRead(O3) == 0 && digitalRead(O4) == 0 && digitalRead(O5) == 1))
+        while ((digitalRead(O1) == OFF && digitalRead(O2) == ON && digitalRead(O3) == ON
+                && digitalRead(O4) == ON && digitalRead(O5) == ON) || (digitalRead(O1) == OFF && digitalRead(O2) == OFF && digitalRead(O3) == ON && digitalRead(O4) == ON && digitalRead(O5) == ON) ||
+                (digitalRead(O1) == OFF && digitalRead(O2) == OFF && digitalRead(O3) == OFF && digitalRead(O4) == ON && digitalRead(O5) == ON) || (digitalRead(O1) == OFF && digitalRead(O2) == OFF && digitalRead(O3) == OFF && digitalRead(O4) == OFF && digitalRead(O5) == ON))
         {
             //      analogWrite(pwmPinFR, 51);
             //      analogWrite(pwmPinRR, 51);
@@ -177,8 +179,8 @@ int itFollows_speedValue = 102;
             //      digitalWrite(dirPinRR, HIGH);
             //      digitalWrite(dirPinRL, HIGH);
             analogWrite(pwmPinFR, itFollows_speedValue);
-            analogWrite(pwmPinRR, 0);
-            analogWrite(pwmPinFL, 0);
+            analogWrite(pwmPinRR, OFF);
+            analogWrite(pwmPinFL, OFF);
             analogWrite(pwmPinRL, itFollows_speedValue);
             digitalWrite(dirPinFR, LOW);
             digitalWrite(dirPinFL, LOW);
@@ -186,7 +188,7 @@ int itFollows_speedValue = 102;
             digitalWrite(dirPinRL, LOW);
         }
     }
-    if ((digitalRead(O1) == 1 && digitalRead(O2) == 1 && digitalRead(O3) == 1 && digitalRead(O4) == 1 && digitalRead(O5) == 1))
+    if ((digitalRead(O1) == ON && digitalRead(O2) == ON && digitalRead(O3) == ON && digitalRead(O4) == ON && digitalRead(O5) == ON))
     {
         //return true;
         //do nothing
