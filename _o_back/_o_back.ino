@@ -144,6 +144,7 @@ int adjustment_speed = 70;
                 && digitalRead(O4) == ON && digitalRead(O5) == OFF) || (digitalRead(O1) == ON && digitalRead(O2) == ON && digitalRead(O3) == ON && digitalRead(O4) == OFF && digitalRead(O5) == OFF) ||
                 (digitalRead(O1) == ON && digitalRead(O2) == ON && digitalRead(O3) == OFF && digitalRead(O4) == OFF && digitalRead(O5) == OFF) || (digitalRead(O1) == ON && digitalRead(O2) == OFF && digitalRead(O3) == OFF && digitalRead(O4) == OFF && digitalRead(O5) == OFF))
         {
+
                   analogWrite(pwmPinFR, adjustment_speed);
                   analogWrite(pwmPinRR, adjustment_speed);
                   analogWrite(pwmPinFL, adjustment_speed);
