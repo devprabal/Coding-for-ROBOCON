@@ -8,6 +8,7 @@
 #define pwmPinFL 9
 #define pwmPinRL 3
 #define pwmPinRR 5
+int speed_value = 120;
 void setDirection(bool FR, bool FL, bool RL, bool RR, int speedValue)
 {
   digitalWrite(dirPinFR, FR);
@@ -65,34 +66,36 @@ void setup() {
 
 void loop() {
   // Forward direction
-  setDirection(1,1,1,1,100);//when button pressed (do once)
+  setDirection(1,1,1,1,speed_value);//when button pressed (do once)
   while(millis()<4000)
   {
-    Movement(100);//keep on going till button is pressed (repeatedly)
+    Movement(speed_value);//keep on going till button is pressed (repeatedly)
   }
   
-  ease_out(100);//when button is released (do once)
+  ease_out(speed_value);//when button is released (do once)
   // Backward direction
-  setDirection(0,0,0,0,100);
-  while(millis()<11000)
+  setDirection(0,0,0,0,speed_value);
+  //while(millis()<11000)
   {
-    Movement(100);//keep on going till button is pressed (repeatedly)
+    Movement(speed_value);//keep on going till button is pressed (repeatedly)
   }
-  ease_out(100);
+  delay(5000);
+  ease_out(speed_value);
   // Left direction
-  setDirection(1,0,1,0,100);
-  while(millis()<18000)
+  setDirection(1,0,1,0,speed_value);
+ 
   {
-    Movement(100);//keep on going till button is pressed (repeatedly)
+    Movement(speed_value);//keep on going till button is pressed (repeatedly)
   }
-  ease_out(100);
+  delay(5000);
+  ease_out(speed_value);
   // Right direction
-  setDirection(0,1,0,1,100);
-  while(millis()<25000)
+  setDirection(0,1,0,1,speed_value);
   {
-    Movement(100);//keep on going till button is pressed (repeatedly)
+    Movement(speed_value);//keep on going till button is pressed (repeatedly)
   }
-  ease_out(100);
+  delay(5000);
+  ease_out(speed_value);
   allstop();
   delay(10000);
 //  // clockwise turning
