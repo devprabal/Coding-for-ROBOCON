@@ -43,6 +43,13 @@ void ease_out(int speedValue)
   }
   delay(2000);
 }
+void allstop()
+{
+    analogWrite(pwmPinFR, 0);
+    analogWrite(pwmPinFL, 0);
+    analogWrite(pwmPinRL, 0);
+    analogWrite(pwmPinRR, 0);
+}
 void setup() {
   // put your setup code here, to run once:
   pinMode(dirPinFR, OUTPUT);
@@ -86,13 +93,16 @@ void loop() {
     Movement(100);//keep on going till button is pressed (repeatedly)
   }
   ease_out(100);
-  // clockwise turning
-  setDirection(0,1,1,0,150);
-  while(millis()<45000)
-  {
-    Movement(150);//keep on going till button is pressed (repeatedly)
-  }
-  ease_out(150);
+  allstop();
+  delay(10000);
+//  // clockwise turning
+//  setDirection(0,1,1,0,150);
+//  while(millis()<45000)
+//  {
+//    Movement(150);//keep on going till button is pressed (repeatedly)
+//  }
+//  ease_out(150);
+
 // anticlockwise turning
 //  setDirection(0,1,1,0,150);
 //  while(millis()<55000)
