@@ -40,8 +40,8 @@ void setup()
 }
 void loop()
 {
-  int itFollows_speedValue = 120;
-  int adjustment_speed = 80;
+  int itFollows_speedValue = 102;
+  int adjustment_speed = 60;
   if ((digitalRead(O1) == OFF && digitalRead(O2) == ON && digitalRead(O3) == ON && digitalRead(O4) == ON && digitalRead(O5) == OFF) ||
       (digitalRead(O1) == OFF && digitalRead(O2) == ON && digitalRead(O3) == ON && digitalRead(O4) == OFF && digitalRead(O5) == OFF) ||
       (digitalRead(O1) == OFF && digitalRead(O2) == OFF && digitalRead(O3) == ON && digitalRead(O4) == ON && digitalRead(O5) == OFF))
@@ -82,40 +82,40 @@ void loop()
            (digitalRead(O1) == ON && digitalRead(O2) == ON && digitalRead(O3) == OFF && digitalRead(O4) == OFF && digitalRead(O5) == OFF) ||
            (digitalRead(O1) == ON && digitalRead(O2) == OFF && digitalRead(O3) == OFF && digitalRead(O4) == OFF && digitalRead(O5) == OFF))
     {
-      if ( ON == 0)
+      if (ON == 1)
       {
         // right because ON == 0
         analogWrite(pwmPinFR, adjustment_speed);
         analogWrite(pwmPinRR, adjustment_speed);
         analogWrite(pwmPinFL, adjustment_speed);
         analogWrite(pwmPinRL, adjustment_speed);
-        digitalWrite(dirPinFR, LOW);
-        digitalWrite(dirPinFL, HIGH);
-        digitalWrite(dirPinRR, LOW);
-        digitalWrite(dirPinRL, HIGH);
+//        digitalWrite(dirPinFR, LOW);
+//        digitalWrite(dirPinFL, HIGH);
+//        digitalWrite(dirPinRR, LOW);
+//        digitalWrite(dirPinRL, HIGH);
         /*THIS SHOULD BE THE DIRECTIONS but I don't know why it doesn't work*/
-        //                  digitalWrite(dirPinFR, LOW);
-        //                  digitalWrite(dirPinFL, HIGH);
-        //                  digitalWrite(dirPinRR, HIGH);
-        //                  digitalWrite(dirPinRL, LOW);
+                          digitalWrite(dirPinFR, LOW);
+                          digitalWrite(dirPinFL, HIGH);
+                          digitalWrite(dirPinRR, HIGH);
+                          digitalWrite(dirPinRL, LOW);
         /*~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
       }
-      if (ON == 1)
+      if (ON == 0)
       {
         // for left when ON == 1
         analogWrite(pwmPinFR, adjustment_speed);
         analogWrite(pwmPinRR, adjustment_speed);
         analogWrite(pwmPinFL, adjustment_speed);
         analogWrite(pwmPinRL, adjustment_speed);
-        digitalWrite(dirPinFR, HIGH);
-        digitalWrite(dirPinFL, LOW);
-        digitalWrite(dirPinRR, HIGH);
-        digitalWrite(dirPinRL, LOW);
+//        digitalWrite(dirPinFR, HIGH);
+//        digitalWrite(dirPinFL, LOW);
+//        digitalWrite(dirPinRR, HIGH);
+//        digitalWrite(dirPinRL, LOW);
         /*THIS SHOULD BE THE DIRECTIONS but I don't know why it doesn't work*/
-        //                  digitalWrite(dirPinFR, HIGH);
-        //                  digitalWrite(dirPinFL, LOW);
-        //                  digitalWrite(dirPinRR, LOW);
-        //                  digitalWrite(dirPinRL, HIGH);
+                          digitalWrite(dirPinFR, HIGH);
+                          digitalWrite(dirPinFL, LOW);
+                          digitalWrite(dirPinRR, LOW);
+                          digitalWrite(dirPinRL, HIGH);
         //                  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
       }
 
@@ -134,24 +134,24 @@ void loop()
 
 
       {
-        if (ON == 0)
+        if (ON == 1)
         { //left because ON == 0
           analogWrite(pwmPinFR, adjustment_speed);
           analogWrite(pwmPinRR, adjustment_speed);
           analogWrite(pwmPinFL, adjustment_speed);
           analogWrite(pwmPinRL, adjustment_speed);
-          digitalWrite(dirPinFR, HIGH);
-          digitalWrite(dirPinFL, LOW);
-          digitalWrite(dirPinRR, HIGH);
-          digitalWrite(dirPinRL, LOW);
+//          digitalWrite(dirPinFR, HIGH);
+//          digitalWrite(dirPinFL, LOW);
+//          digitalWrite(dirPinRR, HIGH);
+//          digitalWrite(dirPinRL, LOW);
           /*THIS SHOULD BE THE DIRECTIONS but I don't know why it doesn't work*/
-          //                  digitalWrite(dirPinFR, HIGH);
-          //                  digitalWrite(dirPinFL, LOW);
-          //                  digitalWrite(dirPinRR, LOW);
-          //                  digitalWrite(dirPinRL, HIGH);
+                            digitalWrite(dirPinFR, HIGH);
+                            digitalWrite(dirPinFL, LOW);
+                            digitalWrite(dirPinRR, LOW);
+                            digitalWrite(dirPinRL, HIGH);
           /*~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
         }
-        if (ON == 1)
+        if (ON == 0)
         {
           //for right when ON == 1
 
@@ -159,24 +159,24 @@ void loop()
           analogWrite(pwmPinRR, adjustment_speed);
           analogWrite(pwmPinFL, adjustment_speed);
           analogWrite(pwmPinRL, adjustment_speed);
-          digitalWrite(dirPinFR, LOW);
-          digitalWrite(dirPinFL, HIGH);
-          digitalWrite(dirPinRR, LOW);
-          digitalWrite(dirPinRL, HIGH);
+//          digitalWrite(dirPinFR, LOW);
+//          digitalWrite(dirPinFL, HIGH);
+//          digitalWrite(dirPinRR, LOW);
+//          digitalWrite(dirPinRL, HIGH);
           /*THIS SHOULD BE THE DIRECTIONS but I don't know why it doesn't work*/
-          //                  digitalWrite(dirPinFR, LOW);
-          //                  digitalWrite(dirPinFL, HIGH);
-          //                  digitalWrite(dirPinRR, HIGH);
-          //                  digitalWrite(dirPinRL, LOW);
+                            digitalWrite(dirPinFR, LOW);
+                            digitalWrite(dirPinFL, HIGH);
+                            digitalWrite(dirPinRR, HIGH);
+                            digitalWrite(dirPinRL, LOW);
           /*~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
         }
       }
     }
-    if ((digitalRead(O1) == ON && digitalRead(O2) == ON && digitalRead(O3) == ON && digitalRead(O4) == ON && digitalRead(O5) == ON))
-    {
-      //return true;
-      //do nothing
-    }
+//    if ((digitalRead(O1) == ON && digitalRead(O2) == ON && digitalRead(O3) == ON && digitalRead(O4) == ON && digitalRead(O5) == ON))
+//    {
+//      //return true;
+//      //do nothing
+//    }
     else
     {
       //task_no=1;
@@ -190,3 +190,4 @@ void loop()
       digitalWrite(dirPinRL, LOW);
     }
   }
+}
