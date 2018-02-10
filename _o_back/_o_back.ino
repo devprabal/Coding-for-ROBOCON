@@ -153,6 +153,12 @@ int adjustment_speed = 70;
                   digitalWrite(dirPinFL, HIGH);
                   digitalWrite(dirPinRR, LOW);
                   digitalWrite(dirPinRL, HIGH);
+                  /*THIS SHOULD BE THE DIRECTIONS but I don't know why it doesn't work*/
+//                  digitalWrite(dirPinFR, LOW);
+//                  digitalWrite(dirPinFL, HIGH);
+//                  digitalWrite(dirPinRR, HIGH);
+//                  digitalWrite(dirPinRL, LOW);
+                  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 //            analogWrite(pwmPinFR, 0);
 //            analogWrite(pwmPinRR, itFollows_speedValue/2);
 //            analogWrite(pwmPinFL, itFollows_speedValue/2);
@@ -181,6 +187,12 @@ int adjustment_speed = 70;
                   digitalWrite(dirPinFL, LOW);
                   digitalWrite(dirPinRR, HIGH);
                   digitalWrite(dirPinRL, LOW);
+                  /*THIS SHOULD BE THE DIRECTIONS but I don't know why it doesn't work*/
+//                  digitalWrite(dirPinFR, HIGH);
+//                  digitalWrite(dirPinFL, LOW);
+//                  digitalWrite(dirPinRR, LOW);
+//                  digitalWrite(dirPinRL, HIGH);
+                  /*~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 //            analogWrite(pwmPinFR, itFollows_speedValue/2);
 //            analogWrite(pwmPinRR, 0);
 //            analogWrite(pwmPinFL, 0);
