@@ -28,7 +28,7 @@
 
 int speedValue = 120;
 void slowdown(int value) {
-  
+
 }
 void diagonal()
 {
@@ -133,71 +133,101 @@ void tz1() {
     }
   }
 }
-  void setup() {
-    pinMode(D1, INPUT);
-    pinMode(D2, INPUT);
-    pinMode(D3, INPUT);
-    pinMode(D4, INPUT);
-    pinMode(D5, INPUT);
+void tz2()
+{
+  tz1();
+}
+void setup() {
+  pinMode(D1, INPUT);
+  pinMode(D2, INPUT);
+  pinMode(D3, INPUT);
+  pinMode(D4, INPUT);
+  pinMode(D5, INPUT);
 
-    pinMode(S1, INPUT);
-    pinMode(S2, INPUT);
-    pinMode(S3, INPUT);
-    pinMode(S4, INPUT);
-    pinMode(S5, INPUT);
+  pinMode(S1, INPUT);
+  pinMode(S2, INPUT);
+  pinMode(S3, INPUT);
+  pinMode(S4, INPUT);
+  pinMode(S5, INPUT);
 
-    pinMode(pwmFR, OUTPUT);
-    pinMode(pwmRR, OUTPUT);
-    pinMode(pwmFL, OUTPUT);
-    pinMode(pwmRL, OUTPUT);
-    pinMode(dirFR, OUTPUT);
-    pinMode(dirFL, OUTPUT);
-    pinMode(dirRR, OUTPUT);
-    pinMode(dirRL, OUTPUT);
+  pinMode(pwmFR, OUTPUT);
+  pinMode(pwmRR, OUTPUT);
+  pinMode(pwmFL, OUTPUT);
+  pinMode(pwmRL, OUTPUT);
+  pinMode(dirFR, OUTPUT);
+  pinMode(dirFL, OUTPUT);
+  pinMode(dirRR, OUTPUT);
+  pinMode(dirRL, OUTPUT);
 
-    //go diagonal
-    while (digitalRead(S1) == OFF && digitalRead(S2) == OFF && digitalRead(S3) == OFF && digitalRead(S4) == OFF && digitalRead(S5) == OFF) //everything off then move diagnally full speed
+  //go diagonal
+  while (digitalRead(S1) == OFF && digitalRead(S2) == OFF && digitalRead(S3) == OFF && digitalRead(S4) == OFF && digitalRead(S5) == OFF) //everything off then move diagnally full speed
+  {
+    diagonal();
+  }
+  while (digitalRead(D3) == OFF && digitalRead(D4) == OFF && digitalRead(D5) == OFF)
+  {
+    slowdown(120);  //slow speed to a particular value
+  }
+
+  //now follow backward line until any one of side sensors is ON
+  while (digitalRead(S1) == OFF && digitalRead(S2) == OFF && digitalRead(S3) == OFF && digitalRead(S4) == OFF && digitalRead(S5) == OFF)
+    /*
+       TODO: check for all 5 down sensors ON condition in while loop
+    */
+  {
+    if ((digitalRead(D1) == OFF && digitalRead(D2) == ON && digitalRead(D3) == ON && digitalRead(D4) == ON && digitalRead(D5) == OFF) ||
+        (digitalRead(D1) == OFF && digitalRead(D2) == ON && digitalRead(D3) == ON && digitalRead(D4) == OFF && digitalRead(D5) == OFF) ||
+        (digitalRead(D1) == OFF && digitalRead(D2) == OFF && digitalRead(D3) == ON && digitalRead(D4) == ON && digitalRead(D5) == OFF))
     {
-      diagonal();
+      backward();
     }
-    while (digitalRead(D3) == OFF && digitalRead(D4) == OFF && digitalRead(D5) == OFF)
+    else if ((digitalRead(D1) == ON || digitalRead(D2) == ON) && digitalRead(D5) == OFF)
     {
-      slowdown(120);  //slow speed to a particular value
+      left();
     }
 
-    //now follow backward line until any one of side sensors is ON
-    while (digitalRead(S1) == OFF && digitalRead(S2) == OFF && digitalRead(S3) == OFF && digitalRead(S4) == OFF && digitalRead(S5) == OFF)
-      /*
-         TODO: check for all 5 down sensors ON condition in while loop
-      */
+    else if (digitalRead(D1) == OFF && (digitalRead(D4) == OFF || digitalRead(D5) == ON))
     {
-      if ((digitalRead(D1) == OFF && digitalRead(D2) == ON && digitalRead(D3) == ON && digitalRead(D4) == ON && digitalRead(D5) == OFF) ||
-          (digitalRead(D1) == OFF && digitalRead(D2) == ON && digitalRead(D3) == ON && digitalRead(D4) == OFF && digitalRead(D5) == OFF) ||
-          (digitalRead(D1) == OFF && digitalRead(D2) == OFF && digitalRead(D3) == ON && digitalRead(D4) == ON && digitalRead(D5) == OFF))
-      {
-        backward();
-      }
-      else if ((digitalRead(D1) == ON || digitalRead(D2) == ON) && digitalRead(D5) == OFF)
-      {
-        left();
-      }
-
-      else if (digitalRead(D1) == OFF && (digitalRead(D4) == OFF || digitalRead(D5) == ON))
-      {
-        right();
-      }
+      right();
     }
-   tz1(); 
-//Reached outside tz1
+  }
+  tz1();
+  //Reached outside tz1
   // if failed throw, then
   //align with manualBot
   //See if color == black and take shuttle from manualBot
   //go to TZ1 again
-//  if (colour == black)
-//  {
-//    //above code
-//  }
+  //  if (colour == black)
+  //  {
+  //    //above code
+  //  }
 
+  
+  //going towards tz2
+  //now follow backward line until any one of side sensors is ON
+  while (digitalRead(S1) == OFF && digitalRead(S2) == OFF && digitalRead(S3) == OFF && digitalRead(S4) == OFF && digitalRead(S5) == OFF)
+    /*
+       TODO: check for all 5 down sensors ON condition in while loop
+    */
+  {
+    if ((digitalRead(D1) == OFF && digitalRead(D2) == ON && digitalRead(D3) == ON && digitalRead(D4) == ON && digitalRead(D5) == OFF) ||
+        (digitalRead(D1) == OFF && digitalRead(D2) == ON && digitalRead(D3) == ON && digitalRead(D4) == OFF && digitalRead(D5) == OFF) ||
+        (digitalRead(D1) == OFF && digitalRead(D2) == OFF && digitalRead(D3) == ON && digitalRead(D4) == ON && digitalRead(D5) == OFF))
+    {
+      backward();
+    }
+    else if ((digitalRead(D1) == ON || digitalRead(D2) == ON) && digitalRead(D5) == OFF)
+    {
+      left();
+    }
+
+    else if (digitalRead(D1) == OFF && (digitalRead(D4) == OFF || digitalRead(D5) == ON))
+    {
+      right();
+    }
+  }
+
+  tz2();
 
 
 }
