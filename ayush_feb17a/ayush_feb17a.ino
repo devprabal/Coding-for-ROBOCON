@@ -30,10 +30,10 @@ void slowdown(int value) {
 }
 void diagonal()
 {
-  dw(pwmFR, 1);
-  dw(pwmRL, 1);
-  dw(pwmFL, 0);
-  dw(pwmRR, 0);
+  aw(pwmFR, 1);
+  aw(pwmRL, 1);
+  aw(pwmFL, 0);
+  aw(pwmRR, 0);
 
   dw(dirFR, 1);
   dw(dirRL, 1);
@@ -41,10 +41,10 @@ void diagonal()
 
 }
 void forward() {
-  dw(pwmFR, 1);
-  dw(pwmFL, 1);
-  dw(pwmRR, 1);
-  dw(pwmRL, 1);
+  aw(pwmFR, 1);
+  aw(pwmFL, 1);
+  aw(pwmRR, 1);
+  aw(pwmRL, 1);
 
   dw(dirFR, 1);
   dw(dirFL, 0);
@@ -52,10 +52,10 @@ void forward() {
   dw(dirRR, 1);
 }
 void backward() {
-  dw(pwmFR, 1);
-  dw(pwmFL, 1);
-  dw(pwmRR, 1);
-  dw(pwmRL, 1);
+  aw(pwmFR, 1);
+  aw(pwmFL, 1);
+  aw(pwmRR, 1);
+  aw(pwmRL, 1);
 
   dw(dirFR, 0);
   dw(dirFL, 1);
@@ -63,10 +63,10 @@ void backward() {
   dw(dirRR, 0);
 }
 void left() {
-  dw(pwmFR, 1);
-  dw(pwmFL, 1);
-  dw(pwmRR, 1);
-  dw(pwmRL, 1);
+  aw(pwmFR, 1);
+  aw(pwmFL, 1);
+  aw(pwmRR, 1);
+  aw(pwmRL, 1);
 
   dw(dirFR, 0);
   dw(dirFL, 0);
@@ -74,10 +74,10 @@ void left() {
   dw(dirRR, 0);
 }
 void right() {
-  dw(pwmFR, 1);
-  dw(pwmFL, 1);
-  dw(pwmRR, 1);
-  dw(pwmRL, 1);
+  aw(pwmFR, 1);
+  aw(pwmFL, 1);
+  aw(pwmRR, 1);
+  aw(pwmRL, 1);
 
   dw(dirFR, 1);
   dw(dirFL, 1);
@@ -185,6 +185,7 @@ void tz1() {
         right();
       }
     }
+   tz1(); 
 //Reached outside tz1
   // if failed throw, then
   //align with manualBot
