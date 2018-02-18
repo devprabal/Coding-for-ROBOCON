@@ -33,8 +33,8 @@ void slowdown(int value) {
 }
 void diagonal()
 {
-  aw(pwmFR, 255);
-  aw(pwmRL, 255);
+  aw(pwmFR, speedValue);
+  aw(pwmRL, speedValue);
   aw(pwmFL, 0);
   aw(pwmRR, 0);
 
