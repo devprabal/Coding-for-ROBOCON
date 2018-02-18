@@ -26,12 +26,15 @@
 #define OFF 0
 #define dw(a,b) digitalWrite(a,b)
 #define aw(a,b) analogWrite(a,b)
+
+int speedValue = 255;
 void slowdown(int value) {
+  
 }
 void diagonal()
 {
-  aw(pwmFR, 1);
-  aw(pwmRL, 1);
+  aw(pwmFR, 255);
+  aw(pwmRL, 255);
   aw(pwmFL, 0);
   aw(pwmRR, 0);
 
@@ -41,10 +44,10 @@ void diagonal()
 
 }
 void forward() {
-  aw(pwmFR, 1);
-  aw(pwmFL, 1);
-  aw(pwmRR, 1);
-  aw(pwmRL, 1);
+  aw(pwmFR, speedValue);
+  aw(pwmFL, speedValue);
+  aw(pwmRR, speedValue);
+  aw(pwmRL, speedValue);
 
   dw(dirFR, 1);
   dw(dirFL, 0);
@@ -52,10 +55,10 @@ void forward() {
   dw(dirRR, 1);
 }
 void backward() {
-  aw(pwmFR, 1);
-  aw(pwmFL, 1);
-  aw(pwmRR, 1);
-  aw(pwmRL, 1);
+  aw(pwmFR, speedValue);
+  aw(pwmFL, speedValue);
+  aw(pwmRR, speedValue);
+  aw(pwmRL, speedValue);
 
   dw(dirFR, 0);
   dw(dirFL, 1);
@@ -63,10 +66,10 @@ void backward() {
   dw(dirRR, 0);
 }
 void left() {
-  aw(pwmFR, 1);
-  aw(pwmFL, 1);
-  aw(pwmRR, 1);
-  aw(pwmRL, 1);
+  aw(pwmFR, speedValue);
+  aw(pwmFL, speedValue);
+  aw(pwmRR, speedValue);
+  aw(pwmRL, speedValue);
 
   dw(dirFR, 0);
   dw(dirFL, 0);
@@ -74,10 +77,10 @@ void left() {
   dw(dirRR, 0);
 }
 void right() {
-  aw(pwmFR, 1);
-  aw(pwmFL, 1);
-  aw(pwmRR, 1);
-  aw(pwmRL, 1);
+  aw(pwmFR, speedValue);
+  aw(pwmFL, speedValue);
+  aw(pwmRR, speedValue);
+  aw(pwmRL, speedValue);
 
   dw(dirFR, 1);
   dw(dirFL, 1);
