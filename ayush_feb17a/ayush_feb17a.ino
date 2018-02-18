@@ -6,28 +6,27 @@
 #define D5 A4
 //Side Sensors
 #define S1 A5
-#define S2 A6
-#define S3 A7
-#define S4 A8
-#define S5 A9
+#define S2 10
+#define S3 11
+#define S4 12
+#define S5 13
 // direction Pins
-#define dirFR 7
-#define dirFL 8
-#define dirRR 4
-#define dirRL 2
+#define dirRR 7 //FR=RR in manualBot config // change RR to FR in autoBot
+#define dirFR 8 //FL=FR in manualBot config
+#define dirRL 4 //RR=RL in manualBot config
+#define dirFL 2 //RL=FL in manualBot config
 // pwm Pins
-#define pwmFR 6
-#define pwmFL 9
-#define pwmRL 3
-#define pwmRR 5
+#define pwmRR 6
+#define pwmFR 9
+#define pwmRL 5
+#define pwmFL 3
 
-
-#define ON 1
-#define OFF 0
+#define ON 0
+#define OFF 1
 #define dw(a,b) digitalWrite(a,b)
 #define aw(a,b) analogWrite(a,b)
 
-int speedValue = 255;
+int speedValue = 120;
 void slowdown(int value) {
   
 }
@@ -38,8 +37,8 @@ void diagonal()
   aw(pwmFL, 0);
   aw(pwmRR, 0);
 
-  dw(dirFR, 1);
-  dw(dirRL, 1);
+  dw(dirFR, 0);
+  dw(dirRL, 0);
 
 
 }
