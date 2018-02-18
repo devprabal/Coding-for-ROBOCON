@@ -21,116 +21,72 @@
 #define pwmRL 3
 #define pwmRR 5
 
+
+#define ON 1
+#define OFF 0
 #define dw(a,b) digitalWrite(a,b)
 #define aw(a,b) analogWrite(a,b)
 void slowdown(int value) {
-  for (; i > value; i--) {
-    aw(pi,);
-  }
 }
-void diagnal()
+void diagonal()
 {
-  dw(pwmFR,1);
-  dw(pwmRL,1);
-  dw(pwmFL,0);
-  dw(pwmRR,0);
+  dw(pwmFR, 1);
+  dw(pwmRL, 1);
+  dw(pwmFL, 0);
+  dw(pwmRR, 0);
 
-  dw(dirFR,1);
-  dw(dirRL,1);
+  dw(dirFR, 1);
+  dw(dirRL, 1);
 
-  
+
 }
-void backward(){
-  dw(pwmFR,1);
-  dw(pwmFL,1);
-  dw(pwmRR,1);
-  dw(pwmRL,1);
+void forward() {
+  dw(pwmFR, 1);
+  dw(pwmFL, 1);
+  dw(pwmRR, 1);
+  dw(pwmRL, 1);
 
-  dw(dirFR,0);
-  dw(dirFL,0);
-  dw(dirRL,0);
-  dw(dirRR,0);
+  dw(dirFR, 1);
+  dw(dirFL, 0);
+  dw(dirRL, 0);
+  dw(dirRR, 1);
 }
-void left(){
-  dw(pwmFR,1);
-  dw(pwmFL,1);
-  dw(pwmRR,1);
-  dw(pwmRL,1);
+void backward() {
+  dw(pwmFR, 1);
+  dw(pwmFL, 1);
+  dw(pwmRR, 1);
+  dw(pwmRL, 1);
 
-  dw(dirFR,1);
-  dw(dirFL,0);
-  dw(dirRL,1);
-  dw(dirRR,0);
+  dw(dirFR, 0);
+  dw(dirFL, 1);
+  dw(dirRL, 1);
+  dw(dirRR, 0);
 }
-void right(){
-    dw(pwmFR,1);
-  dw(pwmFL,1);
-  dw(pwmRR,1);
-  dw(pwmRL,1);
+void left() {
+  dw(pwmFR, 1);
+  dw(pwmFL, 1);
+  dw(pwmRR, 1);
+  dw(pwmRL, 1);
 
-  dw(dirFR,0);
-  dw(dirFL,1);
-  dw(dirRL,0);
-  dw(dirRR,1);
+  dw(dirFR, 0);
+  dw(dirFL, 0);
+  dw(dirRL, 0);
+  dw(dirRR, 0);
 }
-void setup() {
-  pinMode(D1, INPUT);
-  pinMode(D2, INPUT);
-  pinMode(D3, INPUT);
-  pinMode(D4, INPUT);
-  pinMode(D5, INPUT);
+void right() {
+  dw(pwmFR, 1);
+  dw(pwmFL, 1);
+  dw(pwmRR, 1);
+  dw(pwmRL, 1);
 
-  pinMode(S1, INPUT);
-  pinMode(S2, INPUT);
-  pinMode(S3, INPUT);
-  pinMode(S4, INPUT);
-  pinMode(S5, INPUT);
-
-  pinMode(pwmPinFR, OUTPUT);
-  pinMode(pwmPinRR, OUTPUT);
-  pinMode(pwmPinFL, OUTPUT);
-  pinMode(pwmPinRL, OUTPUT);
-  pinMode(dirPinFR, OUTPUT);
-  pinMode(dirPinFL, OUTPUT);
-  pinMode(dirPinRR, OUTPUT);
-  pinMode(dirPinRL, OUTPUT);
-
-  //go diagonal
-  while (digitalRead(S1) == OFF && digitalRead(S2) == OFF && digitalRead(S3) == OFF && digitalRead(S4) == OFF && digitalRead(S5) == OFF) //everything off then move diagnally full speed
-  {
-    diagonal();
-  }
-  while (digitalRead(D3) == OFF && digitalRead(D4) == OFF && digitalRead(D5) == OFF)
-  {
-    slowdown();  //slow speed to a particular value
-  }
-
-  //now follow backward line until any one of side sensors is ON
-  while (digitalRead(S1) == OFF && digitalRead(S2) == OFF && digitalRead(S3) == OFF && digitalRead(S4) == OFF && digitalRead(S5) == OFF))
-    /*
-       TODO: check for all 5 down sensors ON condition in while loop
-    */
-  {
-    if ((digitalRead(D1) == OFF && digitalRead(D2) == ON && digitalRead(D3) == ON && digitalRead(D4) == ON && digitalRead(D5) == OFF) ||
-        (digitalRead(D1) == OFF && digitalRead(D2) == ON && digitalRead(D3) == ON && digitalRead(D4) == OFF && digitalRead(D5) == OFF) ||
-        (digitalRead(D1) == OFF && digitalRead(D2) == OFF && digitalRead(D3) == ON && digitalRead(D4) == ON && digitalRead(D5) == OFF))
-    {
-      backward();
-    }
-    else if ((digitalRead(D1) == ON || digitalRead(D2) == ON) && digitalRead(D5) == OFF)
-    {
-      left();
-    }
-
-    else if (digitalRead(D1) == OFF && (digitalRead(D4) == OFF || digitalRead(D5) == ON)))
-    {
-      right();
-    }
-  }
-//we have reached cross above tz1 
-
-  while(!(digitalRead(D1) == ON || digitalRead(D2) ==ON ||digitalRead(D3) ==ON ||digitalRead(D4) == ON ||digitalRead(D5) == ON)){
-
+  dw(dirFR, 1);
+  dw(dirFL, 1);
+  dw(dirRL, 1);
+  dw(dirRR, 1);
+}
+void tz1() {
+  //we have reached cross above tz1
+  while (!(digitalRead(D1) == ON || digitalRead(D2) == ON || digitalRead(D3) == ON || digitalRead(D4) == ON || digitalRead(D5) == ON))
   {
     if ((digitalRead(S1) == OFF && digitalRead(S2) == ON && digitalRead(S3) == ON && digitalRead(S4) == ON && digitalRead(S5) == OFF) ||
         (digitalRead(S1) == OFF && digitalRead(S2) == ON && digitalRead(S3) == ON && digitalRead(S4) == OFF && digitalRead(S5) == OFF) ||
@@ -143,47 +99,101 @@ void setup() {
       forward();
     }
 
-    else if (digitalRead(S1) == OFF && (digitalRead(S4) == OFF || digitalRead(S5) == ON)))
+    else if (digitalRead(S1) == OFF && (digitalRead(S4) == OFF || digitalRead(S5) == ON))
     {
       backward();
     }
   }
-  }
-  //REACHED TZ1 THROWING POSITION 
+  //REACHED TZ1 THROWING POSITION
   while (!(digitalRead(S1) == OFF && digitalRead(S2) == OFF && digitalRead(S3) == OFF && digitalRead(S4) == OFF && digitalRead(S5) == OFF))
   {
     left();
   }
-  while(!(digitalRead(D1) == ON || digitalRead(D2) ==ON ||digitalRead(D3) ==ON ||digitalRead(D4) == ON ||digitalRead(D5) == ON)){
-  
+  while (!(digitalRead(D1) == ON || digitalRead(D2) == ON || digitalRead(D3) == ON || digitalRead(D4) == ON || digitalRead(D5) == ON)) {
 
-  {
-    if ((digitalRead(S1) == OFF && digitalRead(S2) == ON && digitalRead(S3) == ON && digitalRead(S4) == ON && digitalRead(S5) == OFF) ||
-        (digitalRead(S1) == OFF && digitalRead(S2) == ON && digitalRead(S3) == ON && digitalRead(S4) == OFF && digitalRead(S5) == OFF) ||
-        (digitalRead(S1) == OFF && digitalRead(S2) == OFF && digitalRead(S3) == ON && digitalRead(S4) == ON && digitalRead(S5) == OFF))
-    {
-      left();
-    }
-    else if ((digitalRead(S1) == ON || digitalRead(S2) == ON) && digitalRead(S5) == OFF)
-    {
-      forward();
-    }
 
-    else if (digitalRead(S1) == OFF && (digitalRead(S4) == OFF || digitalRead(S5) == ON)))
     {
-      backward();
+      if ((digitalRead(S1) == OFF && digitalRead(S2) == ON && digitalRead(S3) == ON && digitalRead(S4) == ON && digitalRead(S5) == OFF) ||
+          (digitalRead(S1) == OFF && digitalRead(S2) == ON && digitalRead(S3) == ON && digitalRead(S4) == OFF && digitalRead(S5) == OFF) ||
+          (digitalRead(S1) == OFF && digitalRead(S2) == OFF && digitalRead(S3) == ON && digitalRead(S4) == ON && digitalRead(S5) == OFF))
+      {
+        left();
+      }
+      else if ((digitalRead(S1) == ON || digitalRead(S2) == ON) && digitalRead(S5) == OFF)
+      {
+        forward();
+      }
+
+      else if (digitalRead(S1) == OFF && (digitalRead(S4) == OFF || digitalRead(S5) == ON))
+      {
+        backward();
+      }
     }
   }
-  }
-  //Reached outside tz1
-  // if failed throw, then 
+}
+  void setup() {
+    pinMode(D1, INPUT);
+    pinMode(D2, INPUT);
+    pinMode(D3, INPUT);
+    pinMode(D4, INPUT);
+    pinMode(D5, INPUT);
+
+    pinMode(S1, INPUT);
+    pinMode(S2, INPUT);
+    pinMode(S3, INPUT);
+    pinMode(S4, INPUT);
+    pinMode(S5, INPUT);
+
+    pinMode(pwmFR, OUTPUT);
+    pinMode(pwmRR, OUTPUT);
+    pinMode(pwmFL, OUTPUT);
+    pinMode(pwmRL, OUTPUT);
+    pinMode(dirFR, OUTPUT);
+    pinMode(dirFL, OUTPUT);
+    pinMode(dirRR, OUTPUT);
+    pinMode(dirRL, OUTPUT);
+
+    //go diagonal
+    while (digitalRead(S1) == OFF && digitalRead(S2) == OFF && digitalRead(S3) == OFF && digitalRead(S4) == OFF && digitalRead(S5) == OFF) //everything off then move diagnally full speed
+    {
+      diagonal();
+    }
+    while (digitalRead(D3) == OFF && digitalRead(D4) == OFF && digitalRead(D5) == OFF)
+    {
+      slowdown(120);  //slow speed to a particular value
+    }
+
+    //now follow backward line until any one of side sensors is ON
+    while (digitalRead(S1) == OFF && digitalRead(S2) == OFF && digitalRead(S3) == OFF && digitalRead(S4) == OFF && digitalRead(S5) == OFF)
+      /*
+         TODO: check for all 5 down sensors ON condition in while loop
+      */
+    {
+      if ((digitalRead(D1) == OFF && digitalRead(D2) == ON && digitalRead(D3) == ON && digitalRead(D4) == ON && digitalRead(D5) == OFF) ||
+          (digitalRead(D1) == OFF && digitalRead(D2) == ON && digitalRead(D3) == ON && digitalRead(D4) == OFF && digitalRead(D5) == OFF) ||
+          (digitalRead(D1) == OFF && digitalRead(D2) == OFF && digitalRead(D3) == ON && digitalRead(D4) == ON && digitalRead(D5) == OFF))
+      {
+        backward();
+      }
+      else if ((digitalRead(D1) == ON || digitalRead(D2) == ON) && digitalRead(D5) == OFF)
+      {
+        left();
+      }
+
+      else if (digitalRead(D1) == OFF && (digitalRead(D4) == OFF || digitalRead(D5) == ON))
+      {
+        right();
+      }
+    }
+//Reached outside tz1
+  // if failed throw, then
   //align with manualBot
   //See if color == black and take shuttle from manualBot
   //go to TZ1 again
-  if(colour == black)
-  {
-    //above code
-  }
+//  if (colour == black)
+//  {
+//    //above code
+//  }
 
 
 
