@@ -186,7 +186,7 @@ void setup() {
       left();
     }
 
-    else if (digitalRead(D1) == OFF && (digitalRead(D4) == OFF || digitalRead(D5) == ON))
+    else if (digitalRead(D1) == OFF && (digitalRead(D4) == ON || digitalRead(D5) == ON))
     {
       right();
     }
@@ -221,15 +221,13 @@ void setup() {
       left();
     }
 
-    else if (digitalRead(D1) == OFF && (digitalRead(D4) == OFF || digitalRead(D5) == ON))
+    else if (digitalRead(D1) == OFF && (digitalRead(D4) == ON || digitalRead(D5) == ON))
     {
       right();
     }
   }
 
   tz2();
-
-
 }
 
 

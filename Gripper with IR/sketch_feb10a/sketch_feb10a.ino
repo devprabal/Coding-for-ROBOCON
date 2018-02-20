@@ -7,40 +7,31 @@
  http://www.arduino.cc/en/Tutorial/Sweep
 */ 
 
-#include <Servo.h> 
- 
-Servo myservo;  // create servo object to control a servo 
+  // create servo object to control a servo 
                 // twelve servo objects can be created on most boards
 int irPin = 7;
 int prev=0,a;
 int count  = 0;
+int motorPin1 =3 ;
+int motorPin2 = 4;
  
 void setup() 
 { 
   pinMode(irPin,INPUT);
-  myservo.attach(9);  // attaches the servo on pin 9 to the servo object 
-   myservo.write(41);
+   pinMode(motorPin1,OUTPUT);
+    pinMode(motorPin2,OUTPUT);
    Serial.begin(9600);
 } 
  
 void loop() 
 {
-  prev = a;
-  a = digitalRead(irPin);
   
- // Serial.println(a);
-  if (prev!=a && a==HIGH){
-    count++;
-  }
-  Serial.println(count);
-  if (a == HIGH && count==6)
-  {
-    myservo.write(41);
-    delay(5000);
-    count = 0;
-  }
-  else{
-    myservo.write(65);
-  }
+    digitalWrite(motorPin1,LOW);
+    digitalWrite(motorPin2,HIGH);
+    delay(1000);
+    digitalWrite(motorPin1,1);
+    digitalWrite(motorPin2,0);
+    delay(1000);
+    
 } 
 
