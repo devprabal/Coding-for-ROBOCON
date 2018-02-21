@@ -1,13 +1,13 @@
 // direction Pins
-#define dirPinFR 5
+#define dirPinFR 4
 #define dirPinFL 2
-#define dirPinRR 7
-#define dirPinRL 9
+#define dirPinRR 6
+#define dirPinRL 8
 // pwm Pins
-#define pwmPinFR 6
-#define pwmPinFL 4
-#define pwmPinRL 10
-#define pwmPinRR 8
+#define pwmPinFR 5
+#define pwmPinFL 3
+#define pwmPinRL 9
+#define pwmPinRR 7
 void setDirection(bool FR, bool FL, bool RL, bool RR, int speedValue)
 {
   digitalWrite(dirPinFR, FR);
