@@ -118,54 +118,66 @@ void stopall(){
   aw(pwmRL,0);
   Serial.println("stop");
 }
+
 void tz1() {
+  bool con = 0,prev = 0;
+  int count = 0;
   //we have reached cross above tz1
-  while (!(digitalRead(D1) == GREEN || digitalRead(D2) == GREEN || digitalRead(D3) == GREEN || digitalRead(D4) == GREEN || digitalRead(D5) == GREEN))
-    if ((digitalRead(S1) == WHITE && digitalRead(S2) == GREEN && digitalRead(S3) == GREEN && digitalRead(S4) == GREEN && digitalRead(S5) == WHITE) ||
-      (digitalRead(S1) == WHITE && digitalRead(S2) == GREEN && digitalRead(S3) == GREEN && digitalRead(S4) == WHITE && digitalRead(S5) == WHITE) ||
-      (digitalRead(S1) == WHITE && digitalRead(S2) == WHITE && digitalRead(S3) == GREEN && digitalRead(S4) == GREEN && digitalRead(S5) == WHITE))
+
+  //now go to throwing position;
+   while(1){
+   prev  = con;
+    con =digitalRead(S1) == WHITE && digitalRead(S2) == WHITE && digitalRead(S9) == WHITE && digitalRead(S10) == WHITE;
+      if ((prev) != con  && con == HIGH){
+        count++;
+      }
+   if (count ==3 ){
+    break;
+   }
+  
+  if  (digitalRead(S4) == WHITE || digitalRead(S5) == WHITE || digitalRead(S6) == WHITE || digitalRead(S7) == WHITE )
     {
-      right();
+      left();
     }
-    else if ((digitalRead(S1) == GREEN || digitalRead(S2) == GREEN) && digitalRead(S5) == WHITE)
+    else if ((digitalRead(S1) == WHITE || digitalRead(S2) == WHITE || digitalRead(S3) == WHITE) && digitalRead(S10) == GREEN)
     {
       forward();
     }
 
-    else if (digitalRead(S1) == WHITE && (digitalRead(S4) == WHITE || digitalRead(S5) == GREEN))
+    else if (digitalRead(S1) == GREEN && (digitalRead(S8) == WHITE || digitalRead(S9) == WHITE || digitalRead(S10) == WHITE  ))
     {
       backward();
     }
+   } 
+   //reached thowing position now go back
+  while(1){
+   prev  = con;
+    con =digitalRead(S1) == WHITE && digitalRead(S2) == WHITE && digitalRead(S9) == WHITE && digitalRead(S10) == WHITE;
+      if (prev != con  && con == HIGH){
+        count--;
+      }
+   if (count ==0 ){
+    break;
+   }
   
-  
-  //REACHED TZ1 THROWING POSITIGREEN
-  while (!(digitalRead(S1) == WHITE && digitalRead(S2) == WHITE && digitalRead(S3) == WHITE && digitalRead(S4) == WHITE && digitalRead(S5) == WHITE))
-  {
-    left();
-  }
-  
-  while (!(digitalRead(D1) == GREEN || digitalRead(D2) == GREEN || digitalRead(D3) == GREEN || digitalRead(D4) == GREEN || digitalRead(D5) == GREEN)) {
-
-
+  if  (digitalRead(S4) == WHITE || digitalRead(S5) == WHITE || digitalRead(S6) == WHITE || digitalRead(S7) == WHITE )
     {
-      if ((digitalRead(S1) == WHITE && digitalRead(S2) == GREEN && digitalRead(S3) == GREEN && digitalRead(S4) == GREEN && digitalRead(S5) == WHITE) ||
-        (digitalRead(S1) == WHITE && digitalRead(S2) == GREEN && digitalRead(S3) == GREEN && digitalRead(S4) == WHITE && digitalRead(S5) == WHITE) ||
-        (digitalRead(S1) == WHITE && digitalRead(S2) == WHITE && digitalRead(S3) == GREEN && digitalRead(S4) == GREEN && digitalRead(S5) == WHITE))
-      {
-        left();
-      }
-      else if ((digitalRead(S1) == GREEN || digitalRead(S2) == GREEN) && digitalRead(S5) == WHITE)
-      {
-        forward();
-      }
-
-      else if (digitalRead(S1) == WHITE && (digitalRead(S4) == WHITE || digitalRead(S5) == GREEN))
-      {
-        backward();
-      }
+      right();
     }
-  }
-}
+    else if ((digitalRead(S1) == WHITE || digitalRead(S2) == WHITE || digitalRead(S3) == WHITE) && digitalRead(S10) == GREEN)
+    {
+      forward();
+    }
+
+    else if (digitalRead(S1) == GREEN && (digitalRead(S8) == WHITE || digitalRead(S9) == WHITE || digitalRead(S10) == WHITE  ))
+    {
+      backward();
+    }
+   } 
+   stopall();
+ }
+
+ 
 void tz2()
 {
   tz1();
@@ -301,7 +313,77 @@ void setup() {
     }
   }
   stopall();
-  
+  tz1();
+  while (1)
+    //      TODO: check for all 5 down sensors GREEN condition in while loop
+    //     */
+
+  { 
+    if (digitalRead(D4) == WHITE || digitalRead(D5) == WHITE || digitalRead(D6) == WHITE||  digitalRead(D7) == WHITE)
+      
+    {
+      backward();
+      Serial.println("backward");
+      Serial.print("      DOwn  ");
+  Serial.print(digitalRead(D1));
+  Serial.print(digitalRead(D2));
+  Serial.print(digitalRead(D3));
+  Serial.print(digitalRead(D4));
+  Serial.print(digitalRead(D5));
+  Serial.print(digitalRead(D6));
+  Serial.print(digitalRead(D7));
+  Serial.print(digitalRead(D8));
+  Serial.print(digitalRead(D9));
+  Serial.println(digitalRead(D10));
+  if(digitalRead(S2) == WHITE || digitalRead(S3) == WHITE || digitalRead(S4) == WHITE || digitalRead(S5) == WHITE)
+      break;
+    }
+    else if ((digitalRead(D1) == GREEN) && (digitalRead(D8) == WHITE ||digitalRead(D9) == WHITE || digitalRead(D10) == WHITE))
+    {
+      right();
+      Serial.print("      DOwn  ");
+  Serial.print(digitalRead(D1));
+  Serial.print(digitalRead(D2));
+  Serial.print(digitalRead(D3));
+  Serial.print(digitalRead(D4));
+  Serial.print(digitalRead(D5));
+  Serial.print(digitalRead(D6));
+  Serial.print(digitalRead(D7));
+  Serial.print(digitalRead(D8));
+  Serial.print(digitalRead(D9));
+  Serial.println(digitalRead(D10));
+    
+    }
+
+    else if ((digitalRead(D1) == WHITE || digitalRead(D2) == WHITE || digitalRead(D3) == WHITE) && digitalRead(D10) == GREEN)
+    {
+      left();
+      Serial.print("      DOwn  ");
+  Serial.print(digitalRead(D1));
+  Serial.print(digitalRead(D2));
+  Serial.print(digitalRead(D3));
+  Serial.print(digitalRead(D4));
+  Serial.print(digitalRead(D5));
+  Serial.print(digitalRead(D6));
+  Serial.print(digitalRead(D7));
+  Serial.print(digitalRead(D8));
+  Serial.print(digitalRead(D9));
+  Serial.println(digitalRead(D10));
+      
+    }
+    else if ((digitalRead(S1) == WHITE && digitalRead(S2) == WHITE && digitalRead(S3) == WHITE && digitalRead(S4) == WHITE && digitalRead(S5) == WHITE)||
+             (digitalRead(D1) == GREEN && digitalRead(D2) == GREEN && digitalRead(D3) == GREEN && digitalRead(D4) == GREEN && digitalRead(D5) == GREEN) && 
+             (digitalRead(D6) == GREEN && digitalRead(D7) == GREEN && digitalRead(D8) == GREEN && digitalRead(D9) == GREEN && digitalRead(D10) == GREEN))
+             {
+                //stopall();
+              }
+    else{
+      backward();
+      Serial.println("--------------------");
+      
+    }
+  }
+  tz2;
   
   
 }
@@ -322,7 +404,10 @@ void loop() {
 
   // now follow backward line until any one of side sensors is GREEN
 
-   //tz1();
+   //tz1;
+
+
+   
   //  \ 
   //  //going towards tz2
   //  //now follow backward line until any one of side sensors is GREEN
