@@ -1,3 +1,5 @@
+#define encoderIr 2 // THIS can be  2, 3, 18, 19, 20, 21 only ,avoid 20,21
+
 //Down Sensors
 #define D1 33
 #define D2 35 //52
@@ -61,9 +63,16 @@
 
 #define stopperPin 49
 
+#define signalLED 11 //for giving signal while throwing
+
 #define GREEN 1
 #define WHITE 0
 #define delayGripper 10    //change this acc.
+#define NoOfRevolutions 7
+#define TZ1POS 13
+#define TZ2POS 14
+#define TZ3POS 16
+
 #define dw(a,b) digitalWrite(a,b)
 #define aw(a,b) analogWrite(a,b)
 
@@ -72,6 +81,7 @@
 Servo myservo;
 int speedValue = 90;
 int slowspeed = 90;
+volatile unsigned long count=0;
 
 void sendSignal(int num)
 {
@@ -150,10 +160,28 @@ void stopall() {
   aw(pwmRL, 0);
   Serial.println("stop");
 }
-void throwShuttle() {
-  //Serial.write(3);
+void throwShuttle(int pos) {
+  int rev=0;
+  //rotate of fixed 'no of revolutions' 
+  while(1)
+  {
+    if (count == 15){
+      rev++;
+    }
+    if (rev== NoOfRevolutions)
+    {
+      break;
+    }
+  }
+  signalRefree();
+  // now throw at specifed angle
+  while(1)
+  if(count ==pos){
+  sendSignal(5);   //5 is code for opening gripper
   aw(pwmThrow, 230); //turn on motor and 
   dw(dirThrow,1);
+  break;
+  }
 }
 void removeStopper(){
     for(int pos = 30; pos <= 80; pos += 1) // goes from 0 degrees to 180 degrees 
@@ -169,6 +197,9 @@ void Stopper(){
     delay(10);                       // waits 15ms for the servo to reach the position 
   }
   }
+void signalRefree(){
+  dw(signalLED,HIGH);
+}
 void tz1() {
   bool con = 0, prev = 0;
   int count = 0;
@@ -200,11 +231,10 @@ void tz1() {
       backward();
     }
   }
-
-  sendSignal(1);
   stopall();
-  throwShuttle();
-  
+  sendSignal(1);
+  throwShuttle(TZ1POS);
+  delay(500);
 
 //reached thowing position now go back
 
@@ -270,7 +300,7 @@ void tz2()
 
   sendSignal(2);
   stopall();
-  throwShuttle();
+  throwShuttle(TZ2POS);    
 //reached thowing position now go back
 while (1) {
   prev  = con;
@@ -414,7 +444,7 @@ void tz3() {
   }
   sendSignal(3);
   stopall();
-  throwShuttle();
+  throwShuttle(TZ3POS);
   //reached thowing position now go back
   while (1) {
     prev  = con;
@@ -469,6 +499,9 @@ void pullShuttle(){
   aw(pwmThrow,150); // can change this speed
   dw(dirThrow,1);  //or this dir accordingly
 }
+void pulse(){
+  count=(count+1)%20;
+}
 
 
 void setup() {
@@ -507,7 +540,13 @@ void setup() {
 
   pinMode (pwmThrow,OUTPUT);
   pinMode(dirThrow,OUTPUT);
-
+//signal LED for throwing
+  pinMode (signalLED,OUTPUT);
+  dw(signalLED,LOW);
+  //for ir encoder
+  pinMode(encoderIr,INPUT);
+  attachInterrupt(digitalPinToInterrupt(encoderIr),pulse,CHANGE);
+  
   //Color sensor pins
   pinMode(COLOR0, OUTPUT);
   pinMode(COLOR1, OUTPUT);
@@ -523,6 +562,7 @@ void setup() {
   digitalWrite(COLOR1, LOW);
   //for Xbee
   Serial.begin(9600);
+  
 
   //for stopper
   myservo.attach(stopperPin);
