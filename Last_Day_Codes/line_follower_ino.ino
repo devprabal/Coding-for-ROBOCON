@@ -44,11 +44,6 @@
 #define pwmRR 4
 #define pwmRL 9
 
-#define GREEN 1
-#define WHITE 0
-#define dw(a,b) digitalWrite(a,b)
-#define aw(a,b) analogWrite(a,b)
-
 //color sensor pins
 #define COLOR0 14
 #define COLOR1 15
@@ -60,6 +55,14 @@
 #define TZ3COLOR 'g'  // for golden
 #define ColorTrig 19
 #define ColorEcho 20
+
+#define pwmThrow 41 
+#define dirThrow 42
+
+#define GREEN 1
+#define WHITE 0
+#define dw(a,b) digitalWrite(a,b)
+#define aw(a,b) analogWrite(a,b)
 
 int speedValue = 90;
 int slowspeed = 90;
@@ -141,7 +144,11 @@ void stopall() {
   aw(pwmRL, 0);
   Serial.println("stop");
 }
-
+void throwShuttle() {
+  //Serial.write(3);
+  aw(pwmThrow, 230); //turn on motor and 
+  dw(dirThrow,1);
+}
 void tz1() {
   bool con = 0, prev = 0;
   int count = 0;
@@ -175,6 +182,9 @@ void tz1() {
   }
 
   sendSignal(1);
+  stopall();
+  throwShuttle();
+  
 
 //reached thowing position now go back
 
@@ -239,6 +249,8 @@ void tz2()
   }
 
   sendSignal(2);
+  stopall();
+  throwShuttle();
 //reached thowing position now go back
 while (1) {
   prev  = con;
@@ -267,16 +279,14 @@ while (1) {
 stopall();
 
 }
-void throwShuttle() {
-  Serial.write(3);
-  aw(34, 230); //turn on motor
-}
+
 char detectColor() {
   //red filter
   digitalWrite(COLOR2, LOW);
   digitalWrite(COLOR3, LOW);
   int frequency = pulseIn(sensorOut, LOW);
   delay(100);
+  // THIS CODE IF GREEN AND BLUE FILTERS ARE NEEDED
   //  // Setting Green filtered photodiodes to be read
   //  digitalWrite(COLOR2,HIGH);
   //  digitalWrite(COLOR3,HIGH);
@@ -358,7 +368,7 @@ void tz3() {
   bool con = 0, prev = 0;
   int count = 0;
   //we have reached cross above tz1
-  Serial.println("------------------Entered TZ1---------------- ");
+  Serial.println("------------------Entered TZ3---------------- ");
   //now go to throwing position;
   while (1) {
     prev  = con;
@@ -385,6 +395,8 @@ void tz3() {
     }
   }
   sendSignal(3);
+  stopall();
+  throwShuttle();
   //reached thowing position now go back
   while (1) {
     prev  = con;
@@ -392,7 +404,7 @@ void tz3() {
     if (prev != con  && con == HIGH) {
       count++;
     }
-    if (count >= 6 && (digitalRead(D4) == WHITE && digitalRead(D5) == WHITE) || (digitalRead(D6) == WHITE && digitalRead(D7) == WHITE)) {
+    if (count >= 9 && (digitalRead(D4) == WHITE && digitalRead(D5) == WHITE) || (digitalRead(D6) == WHITE && digitalRead(D7) == WHITE)) {
       break;
     }
 
@@ -508,10 +520,7 @@ void setup() {
   //  }
   //Line FOllower to GO to tz1
   while (1)
-    //      TODO: check for all 5 down sensors GREEN condition in while loop
-    //     */
-
-  {
+ {
 
     if (digitalRead(D4) == WHITE || digitalRead(D5) == WHITE || digitalRead(D6) == WHITE ||  digitalRead(D7) == WHITE)
 
@@ -531,69 +540,32 @@ void setup() {
       break;
     }
   }
-  //stopall();
-  // while(1){
-  // while(distanceFromColor()){}
-  //  if (detectColor() == TZ1COLOR) {
+
+  //we have reached TZ1
+  stopall();
+  //now use color sensors
+   while(1){
+   while(distanceFromColor()){}
+    if (detectColor() == TZ1COLOR) {
   tz1();
-  //  }
-  //  if (detectColor() == TZ2COLOR){
-  //   break;
-  //  }
-  // }
+    }
+    if (detectColor() == TZ2COLOR){
+     break;
+    }
+   }
   Serial.println("-------------TZ1 ended-----------------");
   goToTz2();
-  // while(1){
-  // while(distanceFromColor()){}
-  //  if (detectColor() == TZ2COLOR) {
+   while(1){
+   while(distanceFromColor()){}
+    if (detectColor() == TZ2COLOR) {
   tz2();
-  //  }
-  //  if (detectColor() == TZ3COLOR){
-  //   tz3();
-  //  }
-  // }
-
-
+    }
+    if (detectColor() == TZ3COLOR){
+     tz3();
+    }
+   }
 }
 
 void loop() {
   Serial.print("      IN LOOOP END OF CODE  ");
-
-  // now follow backward line until any one of side sensors is GREEN
-
-  //tz1;
-
-
-
-  //  \ 
-  //  //going towards tz2
-  //  //now follow backward line until any one of side sensors is GREEN
-  //  while (digitalRead(S1) == WHITE && digitalRead(S2) == WHITE && digitalRead(S3) == WHITE && digitalRead(S4) == WHITE && digitalRead(S5) == WHITE)
-  //    /*
-  //       TODO: check for all 5 down sensors GREEN condition in while loop
-  //     */
-  //  {
-  //    if ((digitalRead(D1) == WHITE && digitalRead(D2) == GREEN && digitalRead(D3) == GREEN && digitalRead(D4) == GREEN && digitalRead(D5) == WHITE) ||
-  //      (digitalRead(D1) == WHITE && digitalRead(D2) == GREEN && digitalRead(D3) == GREEN && digitalRead(D4) == WHITE && digitalRead(D5) == WHITE) ||
-  //      (digitalRead(D1) == WHITE && digitalRead(D2) == WHITE && digitalRead(D3) == GREEN && digitalRead(D4) == GREEN && digitalRead(D5) == WHITE))
-  //    {
-  //      backward();
-  //    }
-  //    else if ((digitalRead(D1) == GREEN || digitalRead(D2) == GREEN) && digitalRead(D5) == WHITE)
-  //    {
-  //      left();
-  //    }
-  //
-  //    else if (digitalRead(D1) == WHITE && (digitalRead(D4) == GREEN || digitalRead(D5) == GREEN))
-  //    {
-  //      right();
-  //    }
-  //  }
-
-  //tz2();
 }
-
-
-
-
-
