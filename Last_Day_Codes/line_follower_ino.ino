@@ -59,11 +59,17 @@
 #define pwmThrow 41 
 #define dirThrow 42
 
+#define stopperPin 49
+
 #define GREEN 1
 #define WHITE 0
+#define delayGripper 10    //change this acc.
 #define dw(a,b) digitalWrite(a,b)
 #define aw(a,b) analogWrite(a,b)
 
+#include <Servo.h> 
+ 
+Servo myservo;
 int speedValue = 90;
 int slowspeed = 90;
 
@@ -149,6 +155,20 @@ void throwShuttle() {
   aw(pwmThrow, 230); //turn on motor and 
   dw(dirThrow,1);
 }
+void removeStopper(){
+    for(int pos = 30; pos <= 80; pos += 1) // goes from 0 degrees to 180 degrees 
+  {                                  // in steps of 1 degree 
+    myservo.write(pos);              // tell servo to go to position in variable 'pos' 
+    delay(10);                       // waits 15ms for the servo to reach the position 
+  }
+}
+void Stopper(){
+   for(int pos = 80; pos>=30; pos-=1)     // goes from 180 degrees to 0 degrees 
+  {                                
+    myservo.write(pos);             // tell servo to go to position in variable 'pos' 
+    delay(10);                       // waits 15ms for the servo to reach the position 
+  }
+  }
 void tz1() {
   bool con = 0, prev = 0;
   int count = 0;
@@ -326,8 +346,6 @@ bool distanceFromColor() {
 void goToTz2() {
   //TZ1 ended GO TOWARDS TZ2
   while (1) {
-    //      TODO: check for all 5 down sensors GREEN condition in while loop
-    //     */
     if (digitalRead(D4) == WHITE && digitalRead(D5) == WHITE && digitalRead(D1) == WHITE &&  digitalRead(D2) == WHITE && digitalRead(D3)) {
       continue;
     }
@@ -424,7 +442,33 @@ void tz3() {
   }
   stopall();
 }
+void goToTZ1(){
+    while (1)
+ {
 
+    if (digitalRead(D4) == WHITE || digitalRead(D5) == WHITE || digitalRead(D6) == WHITE ||  digitalRead(D7) == WHITE)
+
+    {
+      backward();
+    }
+    else if ((digitalRead(D1) == GREEN) && (digitalRead(D8) == WHITE || digitalRead(D9) == WHITE || digitalRead(D10) == WHITE))
+    {
+      right();
+    }
+    else if ((digitalRead(D1) == WHITE || digitalRead(D2) == WHITE || digitalRead(D3) == WHITE) && digitalRead(D10) == GREEN)
+    {
+      left();
+    }
+    if (digitalRead(S2) == WHITE || (digitalRead(S3) == WHITE && digitalRead(S4) == WHITE) || (digitalRead(S10) == WHITE && digitalRead(S9) == WHITE))
+    {
+      break;
+    }
+  }
+}
+void pullShuttle(){
+  aw(pwmThrow,150); // can change this speed
+  dw(dirThrow,1);  //or this dir accordingly
+}
 
 
 void setup() {
@@ -461,6 +505,9 @@ void setup() {
   pinMode(dirRR, OUTPUT);
   pinMode(dirRL, OUTPUT);
 
+  pinMode (pwmThrow,OUTPUT);
+  pinMode(dirThrow,OUTPUT);
+
   //Color sensor pins
   pinMode(COLOR0, OUTPUT);
   pinMode(COLOR1, OUTPUT);
@@ -477,6 +524,8 @@ void setup() {
   //for Xbee
   Serial.begin(9600);
 
+  //for stopper
+  myservo.attach(stopperPin);
 
 
   // while(digitalRead(S1) == WHITE && digitalRead(S2) == WHITE && digitalRead(S3) == WHITE && digitalRead(S4) == WHITE && digitalRead(S5) == WHITE){}
@@ -518,50 +567,47 @@ void setup() {
   //      break;
   //    }
   //  }
+  
   //Line FOllower to GO to tz1
-  while (1)
- {
-
-    if (digitalRead(D4) == WHITE || digitalRead(D5) == WHITE || digitalRead(D6) == WHITE ||  digitalRead(D7) == WHITE)
-
-    {
-      backward();
-    }
-    else if ((digitalRead(D1) == GREEN) && (digitalRead(D8) == WHITE || digitalRead(D9) == WHITE || digitalRead(D10) == WHITE))
-    {
-      right();
-    }
-    else if ((digitalRead(D1) == WHITE || digitalRead(D2) == WHITE || digitalRead(D3) == WHITE) && digitalRead(D10) == GREEN)
-    {
-      left();
-    }
-    if (digitalRead(S2) == WHITE || (digitalRead(S3) == WHITE && digitalRead(S4) == WHITE) || (digitalRead(S10) == WHITE && digitalRead(S9) == WHITE))
-    {
-      break;
-    }
-  }
-
+  goToTZ1();
   //we have reached TZ1
   stopall();
   //now use color sensors
    while(1){
    while(distanceFromColor()){}
     if (detectColor() == TZ1COLOR) {
-  tz1();
+    sendSignal(4);  //4 is code for closing gripper
+    delay(delayGripper);     //assuming this is delay for closing of grippper
+    removeStopper();
+    pullShuttle();
+    tz1();
     }
     if (detectColor() == TZ2COLOR){
+    sendSignal(4);  //4 is code for closing gripper
+    delay(delayGripper);     //assuming this is delay for closing of grippper
+    removeStopper();
+    pullShuttle();
      break;
     }
    }
   Serial.println("-------------TZ1 ended-----------------");
   goToTz2();
+  tz2();     
    while(1){
    while(distanceFromColor()){}
     if (detectColor() == TZ2COLOR) {
-  tz2();
+    sendSignal(4);
+    delay(delayGripper);
+    removeStopper();
+    pullShuttle();
+    tz2();
     }
     if (detectColor() == TZ3COLOR){
-     tz3();
+    sendSignal(4);
+    delay(delayGripper);  
+    removeStopper();
+    pullShuttle();
+    tz3();
     }
    }
 }
