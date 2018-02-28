@@ -1,0 +1,76 @@
+//color sensor pins
+#define COLOR0 14
+#define COLOR1 15
+#define COLOR2 16
+#define COLOR3 17
+#define sensorOut 18
+
+#define ColorTrig 19
+#define ColorEcho 20
+
+char detectColor() {
+  //red filter
+  digitalWrite(COLOR2, LOW);
+  digitalWrite(COLOR3, LOW);
+  int frequency = pulseIn(sensorOut, LOW);
+  Serial.print (frequency);
+  delay(100);
+  // THIS CODE IF GREEN AND BLUE FILTERS ARE NEEDED
+  //  // Setting Green filtered photodiodes to be read
+      digitalWrite(COLOR2,HIGH);
+     digitalWrite(COLOR3,HIGH);
+    frequency = pulseIn(sensorOut, LOW);
+    Serial.print ("    ");
+    Serial.print (frequency);
+    // Setting Blue filtered photodiodes to be read
+    digitalWrite(COLOR2,LOW);
+    digitalWrite(COLOR3,HIGH);
+  //  // Reading the output frequency
+    frequency = pulseIn(sensorOut, LOW);
+    Serial.print ("    ");
+    Serial.println(frequency);
+//
+//  if (frequency < 150) {
+//    return 'w';
+//  }
+//  else if (frequency > 400) {
+//    return 'b';
+//  }
+//  else
+//  {
+//    return 'g';
+//  }
+
+bool distanceFromColor() {
+//  int threshold = 500; //SET THIS VALUE take min of this value
+  digitalWrite(ColorTrig, LOW);
+  delayMicroseconds(2);
+  digitalWrite(ColorTrig, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(ColorTrig, LOW);
+  int  duration = pulseIn(ColorEcho, HIGH);
+  Serial.println(duration);
+}
+void setup() {
+ //Color sensor pins
+  pinMode(COLOR0, OUTPUT);
+  pinMode(COLOR1, OUTPUT);
+  pinMode(COLOR2, OUTPUT);
+  pinMode(COLOR3, OUTPUT);
+  pinMode(sensorOut, INPUT);
+  //ultrasonic color
+  pinMode(ColorTrig, OUTPUT);
+  pinMode(ColorEcho, INPUT);
+
+  // Setting frequency-scaling to 20%
+  digitalWrite(COLOR0, HIGH);
+  digitalWrite(COLOR1, LOW);
+
+}
+
+void loop() {
+
+//call functions one by one and set the threshold values
+
+//detect color will print 3 values (R,G,B) in one line choose the best values for diffrentiating between colors
+}
